@@ -7,13 +7,13 @@
 沿用 anjing-products 的方式：纯静态 HTML，无第三方依赖。
 
 - GitHub 公开仓库：`anjing-le/anjing-business`
-- 计划 Cloudflare Pages 项目：`anjing-business`
+- Cloudflare Pages 项目：`anjing-business`
 - 生产分支：`main`
 - 构建命令：`npm run build`
 - 输出目录：`dist`
-- 计划正式域名：`business.anjing.cc`
+- 正式域名（绑定已创建，解析与证书待验证）：`business.anjing.cc`
 - Node.js：22 或更新版本
 
-Pages 接入完成后，推送 main 触发自动部署。验收时核对正式域名 `/build-info.json` 的 commit 与提交 SHA，以及 Pages 触发类型 `github:push`。
+Pages 已连接 GitHub，推送 main 触发自动部署。验收时核对正式域名 `/build-info.json` 的 commit 与提交 SHA，以及 Pages 触发类型 `github:push`。
 
 当前页面带 noindex，正式内容发布时移除。
