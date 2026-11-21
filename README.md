@@ -14,6 +14,10 @@
 - 正式域名（绑定已创建，解析与证书待验证）：`business.anjing.cc`
 - Node.js：22 或更新版本
 
-Pages 已连接 GitHub，推送 main 触发自动部署。验收时核对正式域名 `/build-info.json` 的 commit 与提交 SHA，以及 Pages 触发类型 `github:push`。
+Pages 已连接 GitHub，配置为推送 main 自动部署；首次已由 API 发起构建，GitHub push 触发尚待验收。验收时核对正式域名 `/build-info.json` 的 commit 与提交 SHA，以及 Pages 触发类型 `github:push`。
 
 当前页面带 noindex，正式内容发布时移除。
+
+## 域名接入
+
+Pages 已登记 `business.anjing.cc`。当前等待 DNS CNAME：`business` → `anjing-business.pages.dev`，随后验证域名状态与 HTTPS。
