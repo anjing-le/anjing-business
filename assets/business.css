@@ -6,3 +6,7 @@
 .viewer-copy {min-height:220px;display:grid;place-items:center;padding:2rem;color:#777267;font:400 18px/1.8 "Kaiti SC","STKaiti","Songti SC",serif}
 .art-viewer {width:min(90vw,680px)}
 @media(max-width:600px){.stage .product-hand .feature .face .business-copy{display:grid;padding:36px 5% 12px}.profile-link{font-size:24px!important}}
+
+.personal-hand .profile-face {display:flex;flex-direction:column;justify-content:center;gap:1rem;padding:1.5rem}
+.personal-hand .profile-title {font:500 clamp(22px,3vw,38px)/1.3 "Kaiti SC","STKaiti","Songti SC",serif;letter-spacing:.06em}
+.personal-hand .profile-summary {font:400 clamp(16px,1.5vw,20px)/1.6 "Kaiti SC","STKaiti","Songti SC",serif;letter-spacing:.06em;color:#777267}
