@@ -1,0 +1,8 @@
+/* Business content stays blank until the service offering is confirmed. */
+.unit:not(.person) .badge-turn > .name {font-family:"Kaiti SC","STKaiti","Songti SC",serif;font-size:calc(var(--w)*.122);letter-spacing:.045em;font-weight:500}
+.unit:not(.person) .front::before {background:linear-gradient(140deg,#ffffff1c,transparent 60%);box-shadow:inset 0 1px 1px #ffffff70,inset 0 -1px 1px #52636320}
+.business-copy {display:grid!important;place-items:center;color:#777267;font:400 clamp(16px,1.5vw,21px)/1.6 "Kaiti SC","STKaiti","Songti SC",serif;letter-spacing:.12em;mix-blend-mode:normal!important;filter:none!important;mask:none!important}
+.profile-link {font:500 clamp(18px,2.8vw,36px)/1.3 "Kaiti SC","STKaiti",Georgia,serif!important;letter-spacing:.03em!important}
+.viewer-copy {min-height:220px;display:grid;place-items:center;padding:2rem;color:#777267;font:400 18px/1.8 "Kaiti SC","STKaiti","Songti SC",serif}
+.art-viewer {width:min(90vw,680px)}
+@media(max-width:600px){.stage .product-hand .feature .face .business-copy{display:grid;padding:36px 5% 12px}.profile-link{font-size:24px!important}}

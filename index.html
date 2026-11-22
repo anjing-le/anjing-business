@@ -1,16 +1,713 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="安静的个人商务合作网站。服务内容整理中。">
-  <meta name="robots" content="noindex">
-  <title>安静 · 商务合作</title>
-  <style>
-    :root{font-family:system-ui,-apple-system,"PingFang SC",sans-serif;color:#222;background:#fafafa;color-scheme:light}
-    *{box-sizing:border-box}body{margin:0;min-height:100svh;display:grid;place-items:center;padding:2rem}
-    main{max-width:40rem;width:100%}p{font-size:1rem;line-height:1.8;color:#626262}h1{font-size:clamp(2rem,6vw,3.5rem);font-weight:500;letter-spacing:-.04em;margin:1rem 0} .label{letter-spacing:.15em;font-size:.875rem}
-  </style>
-</head>
-<body><main><p class="label">ANJING BUSINESS</p><h1>安静 · 商务合作</h1><p>服务内容整理中。</p></main></body>
-</html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#edeae2">
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/star-icon.png">
+<title>安静 · 商务合作</title>
+<meta name="description" content="安静的个人商务合作介绍，服务内容整理中。">
+<meta name="robots" content="noindex">
+<style>
+* { box-sizing:border-box }
+body { margin:0; color:#282a25; background:#edeae2; font-family:"Helvetica Neue",Arial,sans-serif }
+.stage {
+  position:relative; isolation:isolate; overflow:hidden; height:100vh; height:100svh;
+  display:flex; justify-content:center; align-items:flex-start; gap:clamp(8px,4.3vw,80px);
+  background:linear-gradient(#eeeae4bd,#eeeae4bd),url("assets/marble.webp") center / cover,#878787;
+  background-blend-mode:normal,luminosity;
+  --w:min(24vw,29svh,324px); --strap:min(2.8vw,36px); --metal:linear-gradient(103deg,#393c38 0%,#acaca6 17%,#fafbf2 32%,#676b65 48%,#e1e2d7 69%,#4a4d48 91%);
+}
+.stage::after { content:""; pointer-events:none; position:absolute; inset:0; box-shadow:inset 0 8px 16px -15px #514b3e; }
+.unit { width:var(--w); position:relative; perspective:1100px }
+.unit.pulled {z-index:4;animation-play-state:paused}
+.rig { padding-top:var(--length); position:absolute; width:100%; top:0; transform-origin:50% 0; will-change:transform }
+.strap {
+  position:absolute; top:var(--anchor-y); left:0; right:0; width:var(--strap); margin:auto; height:var(--ribbon-length); min-height:3px; transform-origin:50% 0; transform:rotate(var(--pull-angle));
+}
+.strap > i {position:absolute;left:0;width:100%;transform-origin:50% 0;pointer-events:none;
+  background:repeating-linear-gradient(37deg,#ffffff23 0 1px,transparent 1px 3px),repeating-linear-gradient(143deg,#1112 0 1px,transparent 1px 3px),linear-gradient(90deg,var(--edge),var(--fabric) 9% 90%,var(--edge));
+  border-inline:1px solid #24282230; background-position:0 var(--weave-y),0 var(--weave-y),0 0;
+}
+.strap > i:last-child::after { content:""; position:absolute; bottom:2px; left:9%; right:9%; height:4px; border-block:1px dashed #fff5 }
+.joint { position:relative; width:100%; display:grid; justify-items:center; transform-origin:50% 0; will-change:transform }
+.ring {
+  z-index:1; width:calc(var(--strap)*1.25); height:calc(var(--strap)*.58);
+  margin-top:-3px; padding:3px; border-radius:6px 6px 44% 44%; background:var(--metal);
+  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  mask-composite:exclude;
+}
+.mount {position:relative;width:100%;margin-top:calc(var(--w)*.16)}
+.mount::before,.mount::after {
+  content:"";position:absolute;pointer-events:none;left:44%;width:12%;
+  top:calc(var(--w)*-.179);height:calc(var(--w)*.252);
+  background:center / 100% 100% no-repeat;
+}
+.mount::before {background-image:url("assets/clasp-back.svg")}
+.mount::after {background-image:url("assets/clasp-front.svg")}
+.badge {
+  width:100%; aspect-ratio:.78; position:relative; display:flex; flex-direction:column; align-items:flex-start;
+  margin:0;display:block; padding:0; overflow:hidden; appearance:none; color:var(--ink);
+  background:var(--stock); border:1px solid #5b5d5129; border-radius:calc(var(--w) * .074);
+  box-shadow:inset 1px 1px 1px #fff9,inset -1px -2px 2px #282a261e,2px 3px 1px #77756747,8px 16px 22px -11px #46433555,17px 30px 49px -21px #46433555;
+  cursor:grab; touch-action:none; user-select:none; -webkit-tap-highlight-color:transparent;
+}
+.badge:active {cursor:grabbing}
+.badge:focus-visible {outline:3px solid #305d8e; outline-offset:5px}
+.name { position:absolute; bottom:4%; left:9%; font-size:calc(var(--w) * .134); font-weight:600; letter-spacing:-.065em; line-height:1; z-index:1 }
+.art { position:absolute; top:9%;left:0;width:100%;height:70%;object-fit:cover; overflow:hidden; pointer-events:none }
+.mac {--fabric:#687584;--edge:#47525e;--stock:#d9e5f1;--ink:#213348}
+.english {--fabric:#aa6750;--edge:#884b39;--stock:#f4d5ba;--ink:#552d28}
+.cs {--fabric:#717a60;--edge:#555f48;--stock:#d8ddbe;--ink:#303c2d}
+@media(max-width:600px){.stage{--w:min(29vw,27svh);--strap:16px;gap:3vw}.ring{padding:2px}}
+
+.hand {
+  --card-width:min(38vw,58svh);
+  position:absolute; bottom:5svh; left:50%; transform:translateX(-50%);
+  display:flex; align-items:flex-end; justify-content:center; isolation:isolate; pointer-events:none;
+}
+.hand[hidden] { display:none }
+.feature {
+  width:var(--card-width); aspect-ratio:1.54; padding:0; border:none; background:transparent;
+  position:relative; cursor:pointer; touch-action:none; -webkit-tap-highlight-color:transparent;
+}
+.feature + .feature { margin-left:calc(var(--card-width) * -.60) }
+.face {
+  position:absolute; inset:0; display:grid; place-items:center; border-radius:7%;
+  color:var(--color); background:linear-gradient(140deg,#fffdf5,var(--tint));
+  border:1px solid #706b612b; box-shadow:inset 0 0 0 3px #fff9,1px 2px 1px #645d4b45,3px 8px 15px #50493927;
+  transform-origin:50% 90%; transform:translateY(var(--dip)) rotate(var(--tilt));
+  transition:transform .25s ease, box-shadow .25s ease; pointer-events:auto;
+}
+.face::before,.face::after {content:"";position:absolute;width:6%;aspect-ratio:1;background:currentColor;border-radius:35%;transform:rotate(45deg)}
+.face::before {top:7%;left:8%}
+.face::after {bottom:7%;right:8%}
+.feature.show {z-index:2}
+.hand.pulling {z-index:5}
+.feature.sliding {z-index:3;translate:var(--dx) var(--dy)}
+.feature.returning {transition:translate .46s cubic-bezier(.18,.85,.25,1.07)}
+@media(prefers-reduced-motion:reduce){.feature.returning{transition:none}}
+.feature.show .face {transform:translateY(-3.7svh) rotate(0) scale(1.06);box-shadow:inset 0 0 0 3px #fff9,2px 4px 2px #645d4b38,6px 13px 20px #50493935}
+.feature:focus-visible {outline:none}
+.feature:focus-visible .face {outline:2px solid currentColor;outline-offset:3px}
+.scene {width:96%;height:90%;object-fit:contain;border-radius:6%;pointer-events:none}
+.hand.reveal .feature {animation:deal calc(var(--motion-duration) * .78) cubic-bezier(.3,.07,.4,1) backwards; animation-delay:var(--delay)}
+.hand.closing .feature {animation:gather var(--motion-duration) ease-in-out both}
+@keyframes gather {to {transform:translate(var(--gather-x),14svh) scale(.72);opacity:0}}
+@keyframes deal {from {opacity:0;transform:translateY(22px) rotate(-5deg)}}
+@media(max-width:600px){.hand{--card-width:56vw;bottom:10svh}.feature{aspect-ratio:.82}.feature + .feature{margin-left:calc(var(--card-width) * -.81)}}
+@media(prefers-reduced-motion:reduce){.face{transition:none}.hand.reveal .feature,.hand.closing .feature{animation:none}}
+
+.water {position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+.unit {transform-origin:50% 0;animation:breeze var(--period,8s) ease-in-out var(--phase,-2s) infinite alternate}
+.english {--period:9.6s;--phase:-7s}
+.cs {--period:7.3s;--phase:-4s}
+@keyframes breeze {0% {rotate:-.9deg} 46% {rotate:.2deg} 100% {rotate:1.1deg}}
+.unit:focus-within,.unit:hover {animation-play-state:paused}
+.badge {
+  mask-image:radial-gradient(ellipse calc(var(--w)*.042) calc(var(--w)*.018) at 50% 5.4%,transparent 91%,#000 99%);
+}
+.badge::after {
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse calc(var(--w)*.047) calc(var(--w)*.023) at 50% 5.4%,transparent 74%,#332f285c 80%,#f8f3dd96 90%,transparent 100%);
+}
+.joint {filter:drop-shadow(3px 9px 6px #42515133)}
+.art {inset:0;width:100%;height:100%;object-fit:fill}
+.badge .name {background:linear-gradient(0deg,var(--stock) 40%,transparent);bottom:0;left:0;right:0;padding:9% 9% 4%;text-align:left}
+.badge img {z-index:0}
+.badge {isolation:isolate}
+.face {overflow:hidden}
+.face::before,.face::after {display:none}
+.scene {width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.person {position:absolute;top:0;right:3vw;--w:min(10vw,12svh);--strap:calc(var(--w)*.12);--stock:#f4ead8;--ink:#544d44;--fabric:#917c6d;--edge:#715f51;--period:8.7s;--phase:-5s}
+.person .badge {background:linear-gradient(140deg,#f6f0e3,#e4d7bf)}
+.seal {position:absolute;left:35%;top:27%;width:30%;height:30%;border:1.5px solid #9c8b76;border-radius:50% 50% 45% 45%;transform:rotate(-12deg)}
+.seal::after {content:"";position:absolute;inset:17% -21% -9% 25%;border:1px solid #9c8b76;border-radius:50%}
+.profile-face {background:linear-gradient(130deg,#faf2e3,var(--tint));color:var(--color)}
+.profile-face span {font:500 clamp(18px,3vw,44px)/1.3 Georgia,serif;letter-spacing:.09em}
+@media(max-width:780px){.stage{padding-right:14vw;--w:min(24vw,27svh);gap:2.4vw}.person{right:1.8vw;--w:12vw}.person .name{font-size:clamp(9px,2.5vw,14px)}}
+@media(max-width:600px){.feature{aspect-ratio:1.26}.scene{object-fit:fill}}
+@media(prefers-reduced-motion:reduce){.unit{animation:none}}
+
+.mount {perspective:calc(var(--w) * 4.5)}
+.badge-turn {position:relative;width:100%;aspect-ratio:.78;transform-style:preserve-3d;transition:transform .68s cubic-bezier(.32,.02,.18,1)}
+/* One animated angle keeps the upper ring, both clasp arms and card in phase. */
+.rig {--hardware-turn:0deg}
+.ring {transform-origin:50% 100%;transform:rotate(var(--ring-angle)) rotateY(var(--hardware-turn))}
+.mount::before,.mount::after,.badge-turn {transform:rotateY(var(--hardware-turn))}
+.badge-turn {transition:none}
+.badge-turn .badge {position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;margin:0}
+.front {transform:rotateY(0deg)}
+.reverse {transform:rotateY(180deg)}
+.badge-turn .reverse {background:transparent;border:0;box-shadow:none}
+.print {position:absolute;inset:0;background:var(--stock);border:1px solid #45483b38;border-radius:inherit;overflow:hidden}
+.back-art {width:100%;height:65%;object-fit:cover;display:block}
+.product-print::before {content:"";position:absolute;inset:11% 0 22%;background:var(--stock)}
+.unit:not(.person) .badge-turn {pointer-events:none}
+.badge-toggle {position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;border-radius:calc(var(--w)*.074);background:transparent;touch-action:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.badge-toggle:focus-visible {outline:2px solid #536c74;outline-offset:2px}
+.platforms {position:absolute;inset:64% 5% 24%;display:flex;justify-content:space-between;pointer-events:none}
+.platforms button {width:46.43%;padding:0;border:1px solid #695f4d40;border-radius:calc(var(--w)*.043);background:transparent;color:var(--ink);font:600 clamp(8px,calc(var(--w)*.059),17px)/1 system-ui;transition:background .16s,box-shadow .16s}
+.turned .platforms button {pointer-events:auto}
+.platforms button:hover,.platforms button:focus-visible {background:#fff9;box-shadow:inset 0 1px 4px #786d5530}
+.unit.person {animation-name:personal-wind;animation-play-state:running}
+@keyframes personal-wind {from {rotate:-2.4deg} to {rotate:2.1deg}}
+@media(prefers-reduced-motion:reduce){.badge-turn{transition:none}.unit.person{animation:none}}
+@media(pointer:fine) {
+  html, body {cursor:url("assets/cursors/richfree-cursor-20.png") 0 0,auto}
+  .stage :is(.badge,.badge-toggle,.feature,.platforms button),.viewer-bar button:not(:disabled) {
+    cursor:url("assets/cursors/richfree-pointer-20.png") 7 3,pointer;
+  }
+  .stage .platforms button[aria-disabled="true"] {cursor:not-allowed}
+}
+/* Keep both open hands reachable if a product is reopened from the personal view. */
+.stage.both-open .product-hand {left:34%;--card-width:min(27vw,50svh)}
+.stage.both-open .personal-hand {left:83%;--card-width:min(14vw,25svh)}
+@media(max-width:600px){
+  .stage.both-open .product-hand {left:50%;bottom:6svh;--card-width:54vw}
+  .stage.both-open .personal-hand {left:78%;bottom:49svh;--card-width:21vw}
+  .stage.both-open .personal-hand .profile-face span {font-size:14px}
+}
+.person .badge-turn,.person .badge {aspect-ratio:1}
+.person .badge.front {border:0;border-radius:19%;background:transparent;box-shadow:none}
+.person .portrait {position:absolute;inset:-2%;width:104%;height:104%;display:block;object-fit:cover}
+/* Continuous printed surface; hardware and depth stay in CSS. */
+.mac {--stock:#cbdff0;--ink:#293c4a}
+.mac .back-art {height:73%;object-position:center 28%}
+.product-hand.macos-hand {--card-width:min(32vw,45svh)}
+.macos-hand .feature {aspect-ratio:2}
+.macos-hand .feature + .feature {margin-left:calc(var(--card-width)*-.76)}
+.macos-hand .face {background:#f8f6f0;border-radius:4.5%;box-shadow:inset 1px 1px 1px #fff9,1px 2px 1px #645d4b45,3px 8px 15px #50493927}
+.macos-hand .scene {object-fit:contain}
+.art-viewer {width:min(94vw,1400px);max-width:none;max-height:92svh;padding:0;border:1px solid #d9d5c9;border-radius:16px;background:#f8f6f0;color:#3b3b36;box-shadow:0 24px 90px #2227}
+.art-viewer::backdrop {background:#242b2a8c;backdrop-filter:blur(5px)}
+.viewer-bar {display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 18px;font-size:14px}
+.viewer-bar h2 {margin:0;font:inherit;font-weight:600}
+.viewer-bar button {min-width:44px;min-height:44px;border:0;border-radius:50%;background:transparent;color:inherit;font:24px/1 system-ui;cursor:pointer}
+.viewer-bar button:hover {background:#e9e5db}
+.viewer-image {display:block;width:100%;height:auto}
+@media(max-width:600px){.product-hand.macos-hand{--card-width:62vw;bottom:13svh}.macos-hand .feature + .feature{margin-left:calc(var(--card-width)*-.925)}.art-viewer{width:96vw;border-radius:10px}.viewer-bar{padding:6px 12px}}
+/* Shared card proportions. */
+.cs {--stock:#d8ddbe}
+.cs .art {inset:5% 0 auto;width:100%;height:80%;object-fit:contain;mask-image:linear-gradient(transparent,#000 5% 95%,transparent)}
+.cs .back-art {height:68%;object-fit:contain}
+.product-hand.cs-hand {--card-width:min(24vw,35svh)}
+.cs-hand .feature {aspect-ratio:2}
+.cs-hand .feature + .feature {margin-left:calc(var(--card-width)*-.12)}
+.cs-hand .face {background:#f8f6f0;border-radius:4.5%;box-shadow:inset 1px 1px 1px #fff9,1px 2px 1px #645d4b45,3px 8px 15px #50493927}
+.cs-hand .scene {object-fit:contain}
+@media(max-width:600px){.product-hand.cs-hand{--card-width:64vw;width:96vw;bottom:8svh;justify-content:flex-start;overflow-x:auto;padding:6svh 2vw 2svh;pointer-events:auto}.cs-hand .feature{flex:0 0 var(--card-width)}.cs-hand .feature + .feature{margin-left:3vw}}
+/* Polished edges catch the light; the artwork sits inside the clear shell. */
+.unit:not(.person) .front,.product-print {
+  background:linear-gradient(130deg,#fff5,transparent 30% 65%,#fff3),color-mix(in srgb,var(--stock) 24%,transparent);
+  border:1px solid #ffffff9c;
+  box-shadow:inset 1px 1px 1px #ffffffe0,inset -1px -2px 1px #34444155,inset 0 0 0 2px #ffffff36;
+}
+.unit:not(.person) .front .art,.product-print .back-art {
+  position:absolute;inset:11% 0 auto;width:100%;height:67%;
+  object-fit:cover;mask-image:none;border-radius:0;
+}
+.unit.mac .front .art,.mac .product-print .back-art {object-position:center 36%}
+.unit:not(.person) .badge-turn > .name {
+  inset:auto 0 3.8%;padding:0;text-align:center;line-height:1.15;
+  font-size:calc(var(--w)*.123);letter-spacing:-.045em;font-weight:650;
+  color:transparent;background-color:color-mix(in srgb,var(--ink) 80%,#87938a);
+  background-image:repeating-linear-gradient(116deg,#ffffff24 0 .6px,transparent .7px 2px);
+  background-clip:text;-webkit-background-clip:text;
+  filter:drop-shadow(0 -.65px .25px #26332f8a) drop-shadow(0 1px .2px #ffffffda);
+}
+/* Shared cotton-paper stock for the dealt cards. */
+.hand .feature .face {
+  isolation:isolate;
+  background:#f8f6f0 url("assets/card-paper-v1.webp") center / cover no-repeat;
+  border:1px solid #bdb6a66b;
+  border-radius:clamp(10px,calc(var(--card-width)*.06),26px);
+  box-shadow:inset 1px 1px 1px #ffffffd9,inset -1px -1px 1px #b8b0a047,0 1px 0 #d1c8b7,0 2px 0 #c7bfaf,1px 4px 3px #50493925,3px 10px 18px #50493929;
+}
+.hand .feature.show .face {
+  box-shadow:inset 1px 1px 1px #ffffffd9,inset -1px -1px 1px #b8b0a047,0 1px 0 #d1c8b7,0 2px 0 #c7bfaf,2px 6px 4px #50493922,5px 16px 24px #50493930;
+}
+.hand .face::after {
+  content:"";display:block;position:absolute;inset:0;width:auto;height:auto;
+  aspect-ratio:auto;transform:none;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(145deg,#ffffff16,transparent 30% 75%,#b9b09d0c);
+  box-shadow:inset 0 0 0 1px #fff7;
+}
+.macos-hand .face .scene,.cs-hand .face .scene {
+  width:100%;height:100%;padding:4.5% 4%;
+  object-fit:contain;border-radius:inherit;
+  filter:brightness(1.045) contrast(1.025) saturate(.97);
+  mix-blend-mode:multiply;
+  mask-image:linear-gradient(90deg,transparent,#000 2% 98%,transparent),linear-gradient(transparent,#000 3% 97%,transparent);
+  mask-composite:intersect;
+}
+.hand:not(.macos-hand):not(.cs-hand) .scene {mix-blend-mode:multiply}
+
+/* Shared paper card treatment. */
+.english .art {inset:5% 0 auto;width:100%;height:80%;object-fit:contain;mask-image:linear-gradient(transparent,#000 5% 95%,transparent)}
+.english .badge.front .name {padding-bottom:7%}
+.english .back-art {height:68%;object-fit:contain;mask-image:linear-gradient(transparent,#000 5% 95%,transparent)}
+.product-hand.english-hand {--card-width:min(24vw,35svh)}
+.english-hand .feature {aspect-ratio:2}
+.english-hand .feature + .feature {margin-left:calc(var(--card-width)*-.12)}
+.english-hand .face {background:#f8f6f0;border-radius:4.5%;box-shadow:inset 1px 1px 1px #fff9,1px 2px 1px #645d4b45,3px 8px 15px #50493927}
+.english-hand .face .scene {width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+@media(max-width:600px){.product-hand.english-hand{--card-width:64vw;width:96vw;bottom:8svh;justify-content:flex-start;overflow-x:auto;padding:6svh 2vw 2svh;pointer-events:auto}.english-hand .feature{flex:0 0 var(--card-width)}.english-hand .feature + .feature{margin-left:3vw}}
+/* Personal wood badge: illustration directly on the board, plain reverse. */
+.person .badge-turn .badge {
+  border-radius:12%;border:1px solid #a88b6066;
+  background:#f2d8b2;
+  box-shadow:inset 1px 1px 1px #fff9,inset -1px -1px 1px #8b6b3d55,1px 2px 0 #b8996c,3px 6px 10px #4b3f2b22;
+}
+.person .portrait {inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.person .personal-print {
+  border:0;background:#f2d8b2 url("assets/personal/wood-back-v1.webp") center / cover no-repeat;
+}
+.personal-hand {--card-width:min(42vw,50svh,520px)}
+.personal-hand .feature {aspect-ratio:2;text-decoration:none;color:inherit}
+.personal-hand .feature + .feature {margin-left:calc(var(--card-width)*-.08)}
+.personal-hand .profile-face .scene {
+  width:100%;height:100%;object-fit:contain;border-radius:inherit;
+  mix-blend-mode:multiply;filter:brightness(1.025);
+}
+.personal-hand .profile-face .personal-card-label {
+  position:absolute;left:6%;bottom:5%;font:600 clamp(12px,1.8vw,22px)/1.2 system-ui,sans-serif;
+  letter-spacing:-.025em;color:#3b3a34;pointer-events:none;
+}
+@media(max-width:600px){
+  .personal-hand {--card-width:82vw;flex-direction:column;gap:14px;bottom:4svh}
+  .personal-hand .feature + .feature {margin-left:0}
+  .personal-hand .profile-face .personal-card-label {font-size:15px}
+}
+</style>
+<link rel="stylesheet" href="assets/product-cards.css?v=fan-3">
+<link rel="stylesheet" href="assets/mobile.css">
+<link rel="stylesheet" href="assets/business.css">
+</head><body>
+<main class="stage" aria-label="商务合作">
+  <canvas class="water" aria-hidden="true"></canvas>
+  <div class="unit mac"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><button class="badge-toggle" aria-label="服务介绍" aria-expanded="false"></button><div class="badge-turn"><div class="badge front"></div><div class="badge reverse"><div class="print product-print"></div></div><span class="name" aria-hidden="true">服务介绍</span></div></div></div></div></div>
+  <div class="unit english"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><button class="badge-toggle" aria-label="合作方式" aria-expanded="false"></button><div class="badge-turn"><div class="badge front"></div><div class="badge reverse"><div class="print product-print"></div></div><span class="name" aria-hidden="true">合作方式</span></div></div></div></div></div>
+  <div class="unit cs"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><button class="badge-toggle" aria-label="联系洽谈" aria-expanded="false"></button><div class="badge-turn"><div class="badge front"></div><div class="badge reverse"><div class="print product-print"></div></div><span class="name" aria-hidden="true">联系洽谈</span></div></div></div></div></div>
+  <div class="unit person"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><div class="badge-turn"><div class="badge front"><img class="portrait" src="assets/personal/wood-front-v1.webp" alt="" draggable="false"></div><div class="badge reverse" aria-hidden="true"><div class="print personal-print"></div></div></div><button class="badge-toggle" aria-label="安静的个人名片" aria-expanded="false"></button></div></div></div></div>
+  <section class="hand product-hand" aria-label="商务介绍" hidden></section>
+  <section class="hand personal-hand" aria-label="个人介绍" hidden></section>
+</main>
+<dialog class="art-viewer" aria-labelledby="artwork-title">
+  <div class="viewer-bar"><h2 id="artwork-title">商务合作</h2><button type="button" aria-label="关闭详情">×</button></div>
+  <div class="viewer-copy"><p>内容整理中。</p></div>
+</dialog>
+<script>
+const stage = document.querySelector('.stage');
+const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+const cards = [...document.querySelectorAll('.unit')].map((unit,index) => ({
+  unit, index, rig:unit.querySelector('.rig'), joint:unit.querySelector('.joint'), button:unit.querySelector('.badge-toggle'),
+  turn:0, turnTarget:0, offsetX:0, speedX:0, length:0, velocity:0, angle:0, spin:0, target:0, restAngle:[-2,1.6,-1.1,1.3][index]
+}));
+// Sample a flat woven strip. The curve has zero slope at both attachments.
+const bandCount=16;
+for(const card of cards) {
+  const strap=card.unit.querySelector('.strap');
+  card.bands=Array.from({length:bandCount},()=>strap.appendChild(document.createElement('i')));
+  card.flex=card.flexSpeed=0;
+}
+function drawRibbon(card,length,bend) {
+  if(card.drawnLength===length && card.drawnBend===bend) return;
+  card.drawnLength=length;
+  card.drawnBend=bend;
+  let x=0;
+  const step=length/bandCount;
+  card.bands.forEach((band,i)=>{
+    const t=(i+1)/bandCount;
+    const nextX=bend*16*t*t*(1-t)*(1-t);
+    const tilt=-Math.atan2(nextX-x,step);
+    band.style.height=(Math.hypot(nextX-x,step)+(i+1<bandCount?.55:0))+'px';
+    band.style.setProperty('--weave-y',-i*step+'px');
+    band.style.transform='translate('+x+'px,'+(i*step)+'px) rotate('+tilt+'rad) rotateY(var(--hardware-turn))';
+    x=nextX;
+  });
+}
+let product = null, personalOpen = false;
+let frame = 0, lastTime = 0, drag = null;
+function positions(card) {
+  const height = stage.clientHeight;
+  const hardware = card.joint.offsetHeight;
+  const spaceAboveHand=card.index<3 && stage.clientWidth>height ? .425 : .47;
+  const high = Math.max(8, Math.min(height * [.115,.10,.12,.032][card.index], height * spaceAboveHand - hardware));
+  const low = high + Math.min(32, height * .032);
+  const nameHeight = Math.max(28,card.button.offsetHeight*.21);
+  return { high, low, tucked:nameHeight-hardware };
+}
+function paint(card) {
+  const drop=Math.max(0,card.length);
+  card.rig.style.setProperty('--length',drop+'px');
+  // Aim at the ring's lower hinge so the ribbon and ring form one line
+  // while the clasp and badge remain free to swing around that hinge.
+  const jointAngle=card.angle*.64;
+  const hinge=rotatePoint(0,card.hingeY,jointAngle);
+  const dx=card.offsetX+hinge.x, dy=card.length+hinge.y-card.anchorY;
+  const direction=-Math.atan2(dx,dy);
+  const span=Math.hypot(dx,dy);
+  const length=Math.max(0,span-card.ringHeight+2);
+  const normalX=span?dy/span:0, normalY=span?-dx/span:0;
+  if(card.lastTip && !reduced.matches){
+    const sideways=(dx-card.lastTip.x)*normalX+(dy-card.lastTip.y)*normalY;
+    card.flex-=sideways*.38;
+  }
+  card.lastTip={x:dx,y:dy};
+  // A fully extended lanyard has less lateral give than a slack one.
+  const limit=Math.min(length*.13,32/(1+length/430));
+  card.flex=Math.max(-limit,Math.min(limit,card.flex));
+  drawRibbon(card,length,card.flex);
+  card.rig.style.setProperty('--ribbon-length',length+'px');
+  card.rig.style.setProperty('--pull-angle',direction+'rad');
+  card.joint.style.setProperty('--ring-angle',(direction-jointAngle*Math.PI/180)+'rad');
+  card.rig.style.transform='rotate('+card.angle*.36+'deg)';
+  card.joint.style.transform='translate('+card.offsetX+'px,'+Math.min(0,card.length)+'px) rotate('+card.angle*.64+'deg)';
+}
+// A hanging badge moves under gravity and tension along the strap. The
+// reel limits the restoring force on a long pull; sideways motion can swing.
+function stepSwing(c,dt) {
+  const y=c.length-c.anchorY;
+  const radius=Math.max(1,Math.hypot(c.offsetX,y));
+  const nx=c.offsetX/radius, ny=y/radius;
+  const radialSpeed=c.speedX*nx+c.velocity*ny;
+  const gravity=1600;
+  const extension=radius-(c.target-c.anchorY);
+  const tension=Math.max(0,gravity+5200*Math.tanh(extension/95)+9*radialSpeed);
+  const ax=-tension*nx-2.8*c.speedX;
+  c.speedX+=ax*dt;
+  c.velocity+=(gravity-tension*ny-2.8*c.velocity)*dt;
+  c.offsetX+=c.speedX*dt;
+  c.length+=c.velocity*dt;
+  // Inertia tips the hanging body as its attachment accelerates.
+  c.spin+=((c.restAngle-c.angle)*52-5.8*c.spin+Math.max(-480,Math.min(480,ax*.10)))*dt;
+  c.angle+=c.spin*dt;
+}
+function placeGrip(c,g) {
+  const grip=rotatePoint(g.grip.x,g.grip.y,c.angle);
+  const pivot=rotatePoint(g.pointer.x-grip.x,g.pointer.y-grip.y,-c.angle*.36);
+  c.offsetX=pivot.x;
+  c.length=pivot.y;
+}
+function swingInHand(c,g,dt) {
+  if(!g.moved || reduced.matches || dt<=0) return false;
+  const vx=(g.pointer.x-g.previous.x)/dt, vy=(g.pointer.y-g.previous.y)/dt;
+  g.previous=g.pointer;
+  const blend=1-Math.exp(-dt*16);
+  const dvx=(vx-g.vx)*blend, dvy=(vy-g.vy)*blend;
+  g.vx+=dvx; g.vy+=dvy;
+  // Moving the grip above or beside the mass applies a turning impulse.
+  const inertia=g.radius*g.radius+g.armX*g.armX+g.armY*g.armY;
+  c.spin+=(g.armY*dvx-g.armX*dvy)/inertia*180/Math.PI;
+  const equilibrium=c.restAngle+Math.max(-12,Math.min(12,g.armX/g.radius*28));
+  c.spin+=((equilibrium-c.angle)*42-8*c.spin)*dt;
+  c.spin=Math.max(-145,Math.min(145,c.spin));
+  c.angle=Math.max(-34,Math.min(34,c.angle+c.spin*dt));
+  placeGrip(c,g);
+  return Math.abs(c.spin)+Math.abs(c.angle-equilibrium)+Math.abs(g.vx)+Math.abs(g.vy)>.08;
+}
+function releaseMomentum(c,gesture,time) {
+  const samples=gesture.samples;
+  const last=samples[samples.length-1];
+  const first=samples.find(s=>s.t>=time-100);
+  if(!first || time-last.t>=100 || first===last) return;
+  const dt=Math.max(12,time-first.t)/1000;
+  const vx=(last.x-first.x)/dt, vy=(last.y-first.y)/dt;
+  const scale=Math.min(1,1500/Math.max(1,Math.hypot(vx,vy)));
+  c.speedX=vx*scale;
+  c.velocity=vy*scale;
+  c.spin=Math.max(-110,Math.min(110,(last.angle-first.angle)/dt));
+}
+const turnDurationMs=480;
+function advanceTurn(card,dt) {
+  const remaining=card.turnTarget-card.turn;
+  if(!remaining) return false;
+  const step=reduced.matches?1:dt*1000/turnDurationMs;
+  card.turn+=Math.sign(remaining)*Math.min(step,Math.abs(remaining));
+  const t=card.turn;
+  card.rig.style.setProperty('--hardware-turn',(180*t*t*(3-2*t))+'deg');
+  return card.turn!==card.turnTarget;
+}
+function animate(time) {
+  const elapsed=Math.max(0,(time-lastTime)/1000); lastTime=time;
+  const dt=Math.min(elapsed,.05);
+  let active=false;
+  for (const c of cards) {
+    if(advanceTurn(c,elapsed)) active=true;
+    if(reduced.matches) c.flex=c.flexSpeed=0;
+    else {
+      c.flexSpeed+=(-185*c.flex-19*c.flexSpeed)*dt;
+      c.flex+=c.flexSpeed*dt;
+    }
+    if(Math.abs(c.flex)+Math.abs(c.flexSpeed)>.06) active=true;
+    else c.flex=c.flexSpeed=0;
+    if (drag?.card===c) {if(swingInHand(c,drag,dt)) active=true;paint(c);continue;}
+    if (reduced.matches) { c.length=c.target; c.angle=c.restAngle; c.offsetX=c.speedX=c.velocity=c.spin=0; }
+    else if(c.swinging && c.target>c.anchorY+4){
+      // Substep for consistent tension and damping across refresh rates.
+      const steps=Math.max(1,Math.ceil(dt*120));
+      for(let i=0;i<steps;i++) stepSwing(c,dt/steps);
+    } else {
+      c.speedX += (-c.offsetX*118-c.speedX*15)*dt;
+      c.offsetX += c.speedX*dt;
+      c.velocity += ((c.target-c.length)*118-c.velocity*15)*dt;
+      c.length += c.velocity*dt;
+      c.spin += ((c.restAngle-c.angle)*48-c.spin*5)*dt;
+      c.angle += c.spin*dt;
+    }
+    if (Math.abs(c.offsetX)+Math.abs(c.speedX)+Math.abs(c.target-c.length)+Math.abs(c.velocity)+Math.abs(c.restAngle-c.angle)+Math.abs(c.spin)>.055) active=true;
+    else { c.length=c.target; c.angle=c.restAngle; c.offsetX=c.speedX=c.spin=c.velocity=0; c.swinging=false; c.unit.classList.remove('pulled'); }
+    paint(c);
+  }
+  frame=active?requestAnimationFrame(animate):0;
+}
+function wake() { if(!frame) {lastTime=performance.now();frame=requestAnimationFrame(animate)} }
+function layout(initial=false) {
+  for (const c of cards) {
+    const {high,low,tucked}=positions(c);
+    const personal=c.unit.classList.contains('person');
+    const down=personal?personalOpen:product===c.index;
+    const tuckedAway=!personal && !down && (personalOpen || product!==null);
+    const target=down?low:tuckedAway?tucked:high;
+    if (!initial && !c.swinging && Math.abs(c.target-target)>1) c.spin += [17,-20,15,-13][c.index];
+    c.target=target;
+    c.button.setAttribute('aria-expanded',String(down));
+    c.turnTarget=down?1:0;
+    c.unit.classList.toggle('turned',down);
+    const platforms=c.unit.querySelector('.platforms');
+    if(platforms) platforms.inert=!down;
+    const ring=c.joint.querySelector('.ring');
+    const ringStyle=getComputedStyle(ring);
+    c.ringHeight=parseFloat(ringStyle.height);
+    c.hingeY=c.ringHeight+parseFloat(ringStyle.marginTop);
+    c.anchorY=-Math.max(24,ring.offsetWidth);
+    c.rig.style.setProperty('--anchor-y',c.anchorY+'px');
+    if(initial) { c.length=target;c.angle=c.restAngle;paint(c); }
+  }
+  wake();
+}
+function setOpen(card, open) {
+  if(card.unit.classList.contains('person')) {
+    personalOpen=open;
+    if(open && product!==null) {
+      product=null;
+      showProductHand(null);
+    }
+    showPersonalHand(open?card.index:null);
+  } else {
+    product=open?card.index:null;
+    showProductHand(product);
+  }
+  stage.classList.toggle('both-open',personalOpen && product!==null);
+  layout();
+}
+function activate(card) {
+  setOpen(card,card.button.getAttribute('aria-expanded')!=='true');
+}
+const personalLinks=[
+  {href:'https://github.com/anjing-le',label:'GitHub'},
+  {href:'https://anjing.cc/',label:'anjing.cc'}
+];
+const artworkViewer=document.querySelector('.art-viewer');
+function viewArtwork(selection,index) {
+  artworkViewer.querySelector('h2').textContent=features[selection][index][0];
+  artworkViewer.showModal();
+}
+artworkViewer.querySelector('button').onclick=()=>artworkViewer.close();
+artworkViewer.addEventListener('click',event=>{if(event.target===artworkViewer)artworkViewer.close()});
+const features = [
+  [['服务范围','#477296','#d2e4ed'],['交付内容','#667097','#dedff1'],['作品案例','#557f73','#d6e7d8']],
+  [['需求沟通','#9c634d','#efd6bc'],['合作流程','#aa745b','#f2dfbf'],['服务边界','#7c7491','#e2ddec']],
+  [['合作咨询','#546c59','#d8e3cb'],['项目需求','#617a83','#d6e5e5'],['长期合作','#948058','#eee0c8']],
+  [['GitHub','#526771','#d3e1dd'],['个人主页','#776b5e','#e1cfbd']]
+];
+function handRenderer(hand) {
+  function highlight(button) {
+    for(const card of hand.children) card.classList.toggle('show',card===button);
+  }
+  let held=null;
+  hand.onpointerdown=event=>{
+    if(event.pointerType==='touch') return;
+    const button=event.target.closest('.feature');
+    if(!button || held || !event.isPrimary || event.button!==0) return;
+    const translation=getComputedStyle(button).translate;
+    const [dx=0,dy=0]=translation==='none'?[]:translation.split(' ').map(parseFloat);
+    held={button,id:event.pointerId,x:event.clientX,y:event.clientY,dx,dy,moved:false};
+    button.setPointerCapture(event.pointerId);
+  };
+  hand.onpointermove=event=>{
+    if(held){
+      if(event.pointerId!==held.id) return;
+      const dx=event.clientX-held.x, dy=event.clientY-held.y;
+      if(!held.moved && Math.hypot(dx,dy)<6) return;
+      const button=held.button;
+      if(!held.moved){
+        held.moved=true;
+        const face=button.querySelector('.face');
+        face.style.transform=getComputedStyle(face).transform;
+        hand.classList.add('pulling');
+        button.classList.remove('returning');
+        button.classList.add('sliding');
+        highlight(button);
+      }
+      button.style.setProperty('--dx',held.dx+dx+'px');
+      button.style.setProperty('--dy',held.dy+dy+'px');
+      return;
+    }
+    if(event.pointerType==='touch') return;
+    const face=event.target.closest('.face');
+    if(face) highlight(face.closest('.feature'));
+  };
+  function dropFeature(event){
+    if(!held || held.id!==event.pointerId) return;
+    const {button,moved}=held;
+    held=null;
+    if(!moved) return;
+    button.querySelector('.face').style.removeProperty('transform');
+    button.classList.add('returning');
+    button.style.setProperty('--dx','0px');
+    button.style.setProperty('--dy','0px');
+    const clean=()=>{
+      if(held?.button===button || !button.classList.contains('returning')) return;
+      button.classList.remove('sliding','returning');
+      if(!hand.querySelector('.sliding')) hand.classList.remove('pulling');
+    };
+    Promise.allSettled(button.getAnimations().filter(a=>a.transitionProperty==='translate').map(a=>a.finished)).then(clean);
+    if(event.type==='pointerup') button.addEventListener('click',e=>{e.stopImmediatePropagation();e.preventDefault()},{capture:true,once:true,signal:AbortSignal.timeout(400)});
+  }
+  hand.onpointerup=hand.onpointercancel=hand.onlostpointercapture=dropFeature;
+  hand.onpointerleave=()=>!held && highlight(hand.contains(document.activeElement) && document.activeElement.matches(':focus-visible') ? document.activeElement : null);
+  let closeTimer, lastSelection;
+  return function renderHand(selection) {
+    clearTimeout(closeTimer);
+    const opening=selection!==null;
+    const card=cards[opening?selection:lastSelection];
+    const remaining=card?Math.abs(Number(opening)-card.turn):0;
+    const duration=reduced.matches?0:turnDurationMs*remaining;
+    hand.style.setProperty('--motion-duration',duration+'ms');
+    lastSelection=selection;
+    held=null;
+    hand.classList.remove('pulling');
+    if(selection===null) {
+      hand.inert=true;
+      highlight(null);
+      hand.classList.add('closing');
+      const finish=()=>{hand.hidden=true;hand.replaceChildren()};
+      if(duration===0) finish();
+      else closeTimer=setTimeout(finish,duration);
+      return;
+    }
+    hand.inert=false;
+    hand.classList.remove('closing');
+    hand.replaceChildren();
+    hand.hidden=false;
+    hand.classList.toggle('macos-hand',selection===0);
+    hand.classList.toggle('cs-hand',selection===2);
+    hand.classList.toggle('english-hand',selection===1);
+    const pack=features[selection];
+    hand.style.setProperty('--gaps',pack.length-1);
+    hand.setAttribute('aria-label',cards[selection].button.getAttribute('aria-label')+' 内容牌');
+    pack.forEach(([label,color,tint],i)=>{
+      const button=document.createElement(selection===3?'a':'button');
+      if(selection===3){button.href=personalLinks[i].href;button.target='_blank';button.rel='noopener noreferrer';button.draggable=false;}
+      button.className='feature';
+      button.setAttribute('aria-label',label);
+      const offset=i-(pack.length-1)/2;
+      button.style.setProperty('--gather-x',(-offset*35)+'%');
+      const spread=selection===3?offset:offset/Math.max(1,(pack.length-1)/2);
+      button.style.setProperty('--fan-shift',-spread/2);
+      button.style.setProperty('--tilt',spread*(selection===3?3:14)+'deg');
+      button.style.setProperty('--dip',Math.abs(spread)*.9+'svh');
+      button.style.setProperty('--order',i/Math.max(1,pack.length-1));
+      button.style.setProperty('--delay','calc(var(--motion-duration) * .22 * var(--order))');
+      button.style.setProperty('--color',color);
+      button.style.setProperty('--tint',tint);
+      const face=document.createElement('span');
+      face.className='face';
+      if(selection===3) {
+        face.classList.add('profile-face');
+        const topic=document.createElement('span');
+        topic.className='profile-link';
+        topic.textContent=personalLinks[i].label;
+        face.append(topic);
+      } else {
+        const caption=document.createElement('span');
+        caption.className='fan-caption';
+        caption.textContent=label;
+        const content=document.createElement('span');
+        content.className='scene business-copy';
+        content.textContent='内容整理中';
+        face.append(caption,content);
+      }
+      button.append(face);
+      button.onfocus=()=>highlight(button);
+      button.onblur=()=>highlight(null);
+      button.onclick=()=>{highlight(button);if(selection<3)viewArtwork(selection,i)};
+      hand.append(button);
+    });
+    highlight(null);
+    hand.classList.add('reveal');
+  };
+}
+const showProductHand=handRenderer(document.querySelector(".product-hand"));
+const showPersonalHand=handRenderer(document.querySelector(".personal-hand"));
+function rotatePoint(x,y,degrees) {
+  const a=degrees*Math.PI/180;
+  return {x:x*Math.cos(a)-y*Math.sin(a),y:x*Math.sin(a)+y*Math.cos(a)};
+}
+for(const c of cards) {
+  const mount=c.button.closest('.mount');
+  c.button.onclick=()=>activate(c);
+  mount.onpointerdown=e=>{
+    if(!e.isPrimary||e.button!==0||drag||e.target!==c.button) return;
+    c.unit.classList.add('pulled');
+    const bounds=c.unit.getBoundingClientRect();
+    const anchorX=bounds.left+bounds.width/2, anchorY=bounds.top+bounds.height/2;
+    const breeze=parseFloat(getComputedStyle(c.unit).rotate)||0;
+    const pointer=rotatePoint(e.clientX-anchorX,e.clientY-anchorY,-breeze);
+    const pivot=rotatePoint(c.offsetX,c.length,c.angle*.36);
+    const grip=rotatePoint(pointer.x-pivot.x,pointer.y-pivot.y,-c.angle);
+    c.swinging=false;
+    const samples=[{t:e.timeStamp,x:c.offsetX,y:c.length,angle:c.angle}];
+    c.speedX=c.velocity=c.spin=0;
+    const radius=Math.max(20,c.button.offsetHeight*.45);
+    const armX=-grip.x, armY=c.joint.offsetHeight-c.button.offsetHeight*.5-grip.y;
+    drag={pointer,previous:pointer,vx:0,vy:0,armX,armY,radius,samples,id:e.pointerId,card:c,x:e.clientX,y:e.clientY,anchorX,anchorY,breeze,grip,moved:false};
+    e.target.setPointerCapture(e.pointerId);
+  };
+  mount.onpointermove=e=>{
+    if(drag?.id!==e.pointerId||drag.card!==c) return;
+    const dy=e.clientY-drag.y, dx=e.clientX-drag.x;
+    if(!drag.moved && Math.hypot(dx,dy)<6) return;
+    drag.moved=true;
+    drag.pointer=rotatePoint(e.clientX-drag.anchorX,e.clientY-drag.anchorY,-drag.breeze);
+    placeGrip(c,drag);
+    drag.samples.push({t:e.timeStamp,x:c.offsetX,y:c.length,angle:c.angle});
+    while(drag.samples.length>2 && drag.samples[1].t<e.timeStamp-100) drag.samples.shift();
+    paint(c);
+    wake();
+  };
+  function release(e) {
+    if(drag?.id!==e.pointerId||drag.card!==c) return;
+    const moved=drag.moved, distance=e.clientY-drag.y;
+    if(moved && !reduced.matches){
+      c.swinging=true;
+      if(e.type==='pointerup') releaseMomentum(c,drag,e.timeStamp);
+    }
+    drag=null;
+    if(moved && e.type==='pointerup') {
+      mount.addEventListener('click',ev=>{ev.stopImmediatePropagation();ev.preventDefault()},{once:true,capture:true,signal:AbortSignal.timeout(450)});
+      if(distance>18) activate(c);
+      else if(distance< -18 && c.button.getAttribute('aria-expanded')==='true') setOpen(c,false);
+    }
+    wake();
+  }
+  mount.onpointerup=release;
+  mount.onpointercancel=release;
+}
+layout(true);
+new ResizeObserver(()=>layout()).observe(stage);
+</script>
+<script type="module" src="assets/ripples.js"></script>
+</body></html>

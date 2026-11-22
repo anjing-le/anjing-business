@@ -1,0 +1,152 @@
+/* The last card shows its full face. The others share the remaining width. */
+.stage .hand.product-hand {
+  --card-width:min(43vw,68svh);
+  width:min(91vw,calc(var(--card-width)*2.35));
+  display:grid;
+  grid-template-columns:repeat(var(--gaps),minmax(0,1fr)) var(--card-width);
+  align-items:end;
+  justify-content:center;
+  bottom:4.5svh;
+  padding:0;
+  overflow:visible;
+  pointer-events:none;
+}
+.stage .product-hand[hidden] {display:none}
+.stage .product-hand .feature {
+  width:var(--card-width);
+  aspect-ratio:1.56;
+  margin:0;
+}
+.stage .product-hand .feature.show .face {transform:translateY(-1.4svh) rotate(0) scale(1.025)}
+.stage .product-hand .scene {object-fit:contain;padding:0}
+.stage.both-open .product-hand {width:61vw;--card-width:min(31vw,60svh)}
+@media(max-width:600px) {
+  .stage .hand.product-hand,.stage.both-open .product-hand {
+    --card-width:min(64vw,66svh);
+    width:92vw;
+    bottom:8svh;
+  }
+}
+
+/* A narrow clear lip overlaps the inserted photo on both faces. */
+.unit:not(.person) .front::before,.product-print::after {
+  content:"";
+  position:absolute;
+  z-index:1;
+  inset:11% 0 22%;
+  pointer-events:none;
+  background:linear-gradient(90deg,#fcffffa6,#d9e7e733 1.5px,transparent 3px calc(100% - 3px),#52636340 calc(100% - 1.6px),#fff8);
+  box-shadow:inset 0 1px 1px #36494440,inset 0 -1px 0 #f5ffff94;
+}
+.unit.english .product-print .back-art {
+  height:67%;
+  object-fit:cover;
+  mask-image:none;
+}
+
+/* The personal tag is a small maple board with the drawing printed into its grain. */
+.unit.person {--w:min(12vw,15.5svh,148px);right:2vw}
+.person .badge-turn .badge,.person .personal-print,.person .badge-toggle {
+  border-radius:calc(var(--w)*.085);
+}
+.person .badge.front,.person .personal-print {
+  background:#e6c9a1 url("maple-grain.webp") center/cover;
+  border:1px solid #ac89637a;
+  box-shadow:inset 0 1px 1px #fff4dcbe,inset 1px 0 1px #ffefd28c,inset 0 -2px 1px #956d4380;
+}
+.person .badge .portrait {
+  z-index:0;
+  inset:0;
+  width:100%;
+  height:100%;
+  mix-blend-mode:multiply;
+  filter:brightness(1.09);
+}
+.person .personal-print {background-position:50% 65%;background-size:120%}
+@media(max-width:780px) {
+  .unit.person {right:1.5vw;--w:min(14vw,16svh)}
+}
+
+@media(min-width:781px) {
+  .stage {--w:min(24vw,26svh,324px)}
+}
+
+.unit:not(.person) .badge-turn > .name {
+  transform:translateZ(2px);
+  backface-visibility:visible;
+  pointer-events:none;
+}
+.unit:not(.person) .front {transform:translateZ(1.7px)}
+.unit:not(.person) .reverse {transform:rotateY(180deg) translateZ(1.7px)}
+.unit:not(.person) .badge-turn::before,.unit:not(.person) .badge-turn::after {
+  content:"";position:absolute;top:6%;bottom:6%;width:3.4px;
+  background:linear-gradient(#d5e5df99 0 6%,var(--insert-color) 6% 82%,#d5e5df99 82%);
+  transform:translateX(-50%) rotateY(90deg);
+}
+.unit:not(.person) .badge-turn::before {left:0}
+.unit:not(.person) .badge-turn::after {left:100%}
+.mac {--insert-color:#c9def2}
+.english {--insert-color:#fdc19a}
+.cs {--insert-color:#d3d9aa}
+.product-print::before {background:var(--insert-color)}
+.unit:not(.person) .badge.reverse {border:1px solid transparent}
+.product-print .platforms {
+  inset:13.5% 3.5% 24.5%;
+  display:grid;grid-template-rows:1fr 1fr;gap:calc(var(--w)*.03);
+  justify-content:stretch;
+}
+.product-print .platforms button {touch-action:none;width:100%;font-size:clamp(10px,calc(var(--w)*.079),24px);background:#ffffff36}
+.product-print .platforms button:is(:hover,:focus-visible) {background:#ffffffa8}
+
+/* Each index is printed on the exposed corner of its own sheet. */
+.product-hand .fan-caption {
+  position:absolute;top:4%;left:4%;z-index:1;color:#66594b;white-space:nowrap;
+  font:500 clamp(12px,1.13vw,17px)/1.4 "Kaiti SC","STKaiti","KaiTi","Songti SC",Georgia,serif;
+  letter-spacing:.035em;text-shadow:0 .6px #fff9;
+}
+@media(min-width:601px) {
+  .stage .hand.product-hand {
+    --card-width:min(36vw,52svh);--fan-width:min(87vw,calc(var(--card-width) + var(--gaps)*125px));
+    width:var(--fan-width);display:grid;bottom:6svh;align-items:end;
+  }
+  .stage .hand.product-hand[hidden] {display:none}
+  .stage.both-open .hand.product-hand {--fan-width:61vw;--card-width:min(25vw,46svh)}
+  .stage .product-hand .feature {
+    min-width:0;height:calc(var(--card-width)/1.56);width:var(--card-width);
+    z-index:auto;
+  }
+  .stage .product-hand .face {
+    width:var(--card-width);inset:0;transform-origin:50% 100%;
+    transform:rotate(var(--tilt)) translateY(var(--dip));
+    transition:transform .34s cubic-bezier(.24,.66,.29,1),box-shadow .34s ease;
+  }
+  .stage .product-hand .feature.show .face {
+    transform:rotate(var(--tilt)) translateY(calc(var(--dip) - 6svh));
+  }
+  .stage .product-hand .feature.sliding {z-index:20}
+  .stage .product-hand .face .scene {padding:clamp(30px,4.5svh,48px) 3% 2%}
+  .product-hand.reveal .feature {animation-name:fan-deal}
+  .product-hand.closing .feature {
+    animation:fan-fold calc(var(--motion-duration)*.78) cubic-bezier(.45,.05,.7,.85) both;
+    animation-delay:calc(var(--motion-duration)*.22*(1 - var(--order)));
+  }
+  @keyframes fan-fold {
+    to {opacity:0;transform:translateX(calc((var(--fan-width) - var(--card-width))*var(--fan-shift))) translateY(7svh) scale(.89)}
+  }
+  @media(prefers-reduced-motion:reduce) {
+    .stage .product-hand .feature,.stage .product-hand .face {animation:none;transition:none}
+  }
+  @keyframes fan-deal {
+    from {opacity:0;transform:translateX(calc((var(--fan-width) - var(--card-width))*var(--fan-shift))) translateY(7svh) scale(.89)}
+  }
+  @media(prefers-reduced-motion:reduce) { .stage .product-hand .feature {transition:none} }
+}
+@media(max-width:600px) {
+  .stage .hand.product-hand .feature .face .scene {padding:26px 3% 2%}
+}
+@media(min-width:601px) and (max-width:820px) {
+  .stage.both-open .hand.product-hand {
+    left:50%;--fan-width:87vw;--card-width:min(36vw,52svh);
+  }
+  .stage.both-open .personal-hand {left:78%;bottom:49svh;--card-width:17vw}
+}
