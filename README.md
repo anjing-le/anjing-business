@@ -11,7 +11,7 @@
 - 生产分支：`main`
 - 构建命令：`npm run build`
 - 输出目录：`dist`
-- 正式域名（绑定已创建，解析与证书待验证）：`business.anjing.cc`
+- 正式域名：`business.anjing.cc`
 - Node.js：22 或更新版本
 
 Pages 已连接 GitHub，配置为推送 main 自动部署；首次已由 API 发起构建，GitHub push 触发尚待验收。验收时核对正式域名 `/build-info.json` 的 commit 与提交 SHA，以及 Pages 触发类型 `github:push`。
@@ -20,4 +20,6 @@ Pages 已连接 GitHub，配置为推送 main 自动部署；首次已由 API �
 
 ## 域名接入
 
-Pages 已登记 `business.anjing.cc`。当前等待 DNS CNAME：`business` → `anjing-business.pages.dev`，随后验证域名状态与 HTTPS。
+已配置 CNAME：`business` → `anjing-business.pages.dev`，开启 Cloudflare 代理、TTL Auto。
+
+2026-11-22 已验证正式域名 HTTPS 返回 200、浏览器正常显示占位页，且 `/build-info.json` 返回已部署的提交版本。
