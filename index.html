@@ -282,7 +282,7 @@ body { margin:0; color:#282a25; background:#edeae2; font-family:"Helvetica Neue"
 </style>
 <link rel="stylesheet" href="assets/product-cards.css?v=fan-3">
 <link rel="stylesheet" href="assets/mobile.css">
-<link rel="stylesheet" href="assets/business.css?v=procedural-rope-12">
+<link rel="stylesheet" href="assets/business.css?v=natural-woven-13">
 </head><body>
 <main class="stage" aria-label="商务合作">
   <canvas class="water" aria-hidden="true"></canvas>
@@ -297,7 +297,6 @@ body { margin:0; color:#282a25; background:#edeae2; font-family:"Helvetica Neue"
   <div class="viewer-bar"><h2 id="artwork-title">商务合作</h2><button type="button" aria-label="关闭详情">×</button></div>
   <div class="viewer-copy"><p>内容整理中。</p></div>
 </dialog>
-<script src="assets/rope-renderer.js?v=1"></script>
 <script>
 const stage = document.querySelector('.stage');
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
@@ -305,9 +304,6 @@ const cards = [...document.querySelectorAll('.unit')].map((unit,index) => ({
   unit, index, rig:unit.querySelector('.rig'), joint:unit.querySelector('.joint'), button:unit.querySelector('.badge-toggle'),
   turn:0, turnTarget:0, offsetX:0, speedX:0, length:0, velocity:0, angle:0, spin:0, target:0, restAngle:[-2,1.6,-1.1,1.3][index]
 }));
-let ropeRenderer={ready:false};
-try { ropeRenderer=window.createRopeRenderer(stage,cards,()=>layout()); }
-catch(error) { document.querySelector('.rope-canvas')?.remove();stage.classList.add('rope-fallback');console.error('Rope renderer unavailable',error); }
 // Sample a flat woven strip. The curve has zero slope at both attachments.
 const bandCount=16;
 for(const card of cards) {
@@ -362,13 +358,12 @@ function paint(card) {
   // A fully extended lanyard has less lateral give than a slack one.
   const limit=Math.min(length*.13,32/(1+length/430));
   card.flex=Math.max(-limit,Math.min(limit,card.flex));
-  if(!ropeRenderer.ready) drawRibbon(card,length,card.flex);
+  drawRibbon(card,length,card.flex);
   card.rig.style.setProperty('--ribbon-length',length+'px');
   card.rig.style.setProperty('--pull-angle',direction+'rad');
   card.joint.style.setProperty('--ring-angle',(direction-jointAngle*Math.PI/180)+'rad');
   card.rig.style.transform='rotate('+card.angle*.36+'deg)';
   card.joint.style.transform='translate('+card.offsetX+'px,'+Math.min(0,card.length)+'px) rotate('+card.angle*.64+'deg)';
-  if(reduced.matches) ropeRenderer.wake?.();
 }
 // A hanging badge moves under gravity and tension along the strap. The
 // reel limits the restoring force on a long pull; sideways motion can swing.
