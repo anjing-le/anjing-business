@@ -11,13 +11,37 @@
 .personal-hand .profile-title {font:500 clamp(22px,3vw,38px)/1.3 "Kaiti SC","STKaiti","Songti SC",serif;letter-spacing:.06em}
 .personal-hand .profile-summary {font:400 clamp(16px,1.5vw,20px)/1.6 "Kaiti SC","STKaiti","Songti SC",serif;letter-spacing:.06em;color:#777267}
 
-/* Empty business holders are clear acrylic on both sides, without paper inserts. */
-.unit:not(.person) .front,
-.unit:not(.person) .product-print {
-  background:linear-gradient(130deg,#ffffff38,transparent 30% 65%,#ffffff24);
+/* Wooden menu plaques with narrow braided cotton cord; motion stays in the shared rig. */
+.stage .unit {--strap:clamp(5px,.6vw,8px)}
+.unit .strap > i {
+  background:repeating-linear-gradient(38deg,#ead8b299 0 1px,transparent 1px 3px),repeating-linear-gradient(-38deg,#5e463e66 0 1px,transparent 1px 3px),linear-gradient(90deg,#70594a,#b39a78 30%,#d1b995 52%,#93765b 80%,#665044);
+  border-inline:1px solid #6c534d66;border-radius:1px;
 }
-.unit:not(.person) .product-print::before {display:none}
+.unit .strap > i:last-child::after {display:none}
+.unit .ring {
+  width:12px;height:10px;margin-top:-2px;padding:3px;border-radius:45%;
+  background:linear-gradient(110deg,#705344,#c4aa83 40%,#8b6c52 75%,#664c3b);
+}
+.unit .mount::before {background-image:url("cord-back.svg")}
+.unit .mount::after {background-image:url("cord-front.svg")}
+.unit:not(.person) .badge.front,
+.unit:not(.person) .product-print {
+  background:#e6c9a1 url("maple-grain.webp") center/cover;
+  border:1px solid #ac89637a;
+  border-radius:calc(var(--w)*.085);
+  box-shadow:inset 0 1px 1px #fff4dcbe,inset 1px 0 1px #ffefd28c,inset 0 -2px 1px #956d4380;
+}
+.unit:not(.person) .badge.reverse {border:0}
+.unit:not(.person) .front::before,
+.unit:not(.person) .product-print::before,
+.unit:not(.person) .product-print::after {display:none}
 .unit:not(.person) .badge-turn::before,
 .unit:not(.person) .badge-turn::after {
-  background:linear-gradient(#ffffff70 0 6%,#ffffff18 6% 82%,#ffffff70 82%);
+  top:8.5%;bottom:8.5%;background:linear-gradient(90deg,#9f754b,#d4ad7a 45%,#a67c50);
+}
+.unit:not(.person) .badge::after {
+  background:radial-gradient(ellipse calc(var(--w)*.047) calc(var(--w)*.023) at 50% 5.4%,transparent 74%,#79543990 80%,#f3d9af99 90%,transparent 100%);
+}
+.unit:not(.person) .badge-turn > .name {
+  color:#624733;background:none;filter:drop-shadow(0 1px .3px #ffe9c199);
 }
