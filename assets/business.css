@@ -60,3 +60,17 @@
 .unit .ring {width:var(--strap);height:10px;margin-top:-2px;padding:0;mask:none}
 .unit .mount::before {display:none}
 .unit .mount::after {left:calc(50% - var(--strap)/2);width:var(--strap);top:calc(var(--w)*-.179);height:calc(var(--w)*.252)}
+
+/* Shade the photographed fibers as a round body, then cast one continuous shadow. */
+.unit .strap > i,
+.unit .ring,
+.unit .mount::after {
+  background-image:linear-gradient(90deg,#251205e0 0%,#42200c85 18%,#ffe9b46e 34%,#fff3d529 47%,transparent 58%,#4a240c99 79%,#1f0d04eb 100%),url("hemp-strand-v1.png");
+  background-repeat:no-repeat,repeat-y;
+  background-size:100% 100%,230% auto;
+  background-position:0 0,center var(--weave-y,0px);
+  mask-image:url("hemp-strand-v1.png");mask-size:230% auto;mask-repeat:repeat-y;mask-position:center var(--weave-y,0px);
+}
+.unit .strap {filter:drop-shadow(1px 1px .65px #38210c99) drop-shadow(4px 4px 2px #4c321a5c)}
+.unit .ring {filter:drop-shadow(1px 1px .65px #38210c99) drop-shadow(4px 4px 2px #4c321a5c)}
+.unit .mount::after {filter:drop-shadow(1px 1px .65px #38210c99) drop-shadow(4px 4px 2px #4c321a5c)}
