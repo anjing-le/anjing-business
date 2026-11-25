@@ -46,3 +46,17 @@
 .unit:not(.person) .badge-turn > .name {
   color:#624733;background:none;filter:drop-shadow(0 1px .3px #ffe9c199);
 }
+
+/* One thicker hemp rope from the top edge to the existing hole; no loop or knot. */
+.stage .unit {--strap:clamp(11px,1.2vw,17px)}
+.unit .strap > i,
+.unit .ring,
+.unit .mount::after {
+  background-color:transparent;background-image:url("hemp-strand-v1.png");
+  background-repeat:repeat-y;background-size:230% auto;background-position:center var(--weave-y,0px);
+  border:0;box-shadow:none;border-radius:0;
+}
+.unit .strap > i:last-child::after {display:none}
+.unit .ring {width:var(--strap);height:10px;margin-top:-2px;padding:0;mask:none}
+.unit .mount::before {display:none}
+.unit .mount::after {left:calc(50% - var(--strap)/2);width:var(--strap);top:calc(var(--w)*-.179);height:calc(var(--w)*.252)}
