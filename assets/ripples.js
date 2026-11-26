@@ -101,5 +101,5 @@ if (gl) {
     reducedMotion.addEventListener('change',reset);
     document.addEventListener('visibilitychange',reset);
   };
-  marble.src=new URL('./marble.webp',import.meta.url);
+  marble.src=new URL('./marble-small.webp',import.meta.url);
 }

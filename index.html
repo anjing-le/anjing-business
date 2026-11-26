@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#edeae2">
+<link rel="preload" as="image" href="assets/marble-small.webp">
+<link rel="preload" as="image" href="assets/personal/wood-front-small.webp" fetchpriority="high">
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/star-icon.png">
 <title>安静 · 商务合作</title>
 <meta name="description" content="安静的个人商务合作介绍，服务内容整理中。">
@@ -14,7 +16,7 @@ body { margin:0; color:#282a25; background:#edeae2; font-family:"Helvetica Neue"
 .stage {
   position:relative; isolation:isolate; overflow:hidden; height:100vh; height:100svh;
   display:flex; justify-content:center; align-items:flex-start; gap:clamp(8px,4.3vw,80px);
-  background:linear-gradient(#eeeae4bd,#eeeae4bd),url("assets/marble.webp") center / cover,#878787;
+  background:linear-gradient(#eeeae4bd,#eeeae4bd),url("assets/marble-small.webp") center / cover,#878787;
   background-blend-mode:normal,luminosity;
   --w:min(24vw,29svh,324px); --strap:min(2.8vw,36px); --metal:linear-gradient(103deg,#393c38 0%,#acaca6 17%,#fafbf2 32%,#676b65 48%,#e1e2d7 69%,#4a4d48 91%);
 }
@@ -219,7 +221,7 @@ body { margin:0; color:#282a25; background:#edeae2; font-family:"Helvetica Neue"
 /* Shared cotton-paper stock for the dealt cards. */
 .hand .feature .face {
   isolation:isolate;
-  background:#f8f6f0 url("assets/card-paper-v1.webp") center / cover no-repeat;
+  background:#f8f6f0 url("assets/card-paper-small.webp") center / cover no-repeat;
   border:1px solid #bdb6a66b;
   border-radius:clamp(10px,calc(var(--card-width)*.06),26px);
   box-shadow:inset 1px 1px 1px #ffffffd9,inset -1px -1px 1px #b8b0a047,0 1px 0 #d1c8b7,0 2px 0 #c7bfaf,1px 4px 3px #50493925,3px 10px 18px #50493929;
@@ -261,7 +263,7 @@ body { margin:0; color:#282a25; background:#edeae2; font-family:"Helvetica Neue"
 }
 .person .portrait {inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit}
 .person .personal-print {
-  border:0;background:#f2d8b2 url("assets/personal/wood-back-v1.webp") center / cover no-repeat;
+  border:0;background:#f2d8b2 url("assets/personal/wood-back-small.webp") center / cover no-repeat;
 }
 .personal-hand {--card-width:min(42vw,50svh,520px)}
 .personal-hand .feature {aspect-ratio:2;text-decoration:none;color:inherit}
@@ -289,7 +291,7 @@ body { margin:0; color:#282a25; background:#edeae2; font-family:"Helvetica Neue"
   <div class="unit mac"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><button class="badge-toggle" aria-label="业务1" aria-expanded="false"></button><div class="badge-turn"><div class="badge front"></div><div class="badge reverse"><div class="print product-print"></div></div><span class="name" aria-hidden="true">业务1</span></div></div></div></div></div>
   <div class="unit english"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><button class="badge-toggle" aria-label="业务2" aria-expanded="false"></button><div class="badge-turn"><div class="badge front"></div><div class="badge reverse"><div class="print product-print"></div></div><span class="name" aria-hidden="true">业务2</span></div></div></div></div></div>
   <div class="unit cs"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><button class="badge-toggle" aria-label="业务3" aria-expanded="false"></button><div class="badge-turn"><div class="badge front"></div><div class="badge reverse"><div class="print product-print"></div></div><span class="name" aria-hidden="true">业务3</span></div></div></div></div></div>
-  <div class="unit person"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><div class="badge-turn"><div class="badge front"><img class="portrait" src="assets/personal/wood-front-v1.webp" alt="" draggable="false"></div><div class="badge reverse" aria-hidden="true"><div class="print personal-print"></div></div></div><button class="badge-toggle" aria-label="安静名片 · 我们的介绍" aria-expanded="false"></button></div></div></div></div>
+  <div class="unit person"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><div class="badge-turn"><div class="badge front"><img class="portrait" src="assets/personal/wood-front-small.webp" width="384" height="384" decoding="async" fetchpriority="high" alt="" draggable="false"></div><div class="badge reverse" aria-hidden="true"><div class="print personal-print"></div></div></div><button class="badge-toggle" aria-label="安静名片 · 我们的介绍" aria-expanded="false"></button></div></div></div></div>
   <section class="hand product-hand" aria-label="商务介绍" hidden></section>
   <section class="hand personal-hand" aria-label="我们的介绍" hidden></section>
 </main>
