@@ -517,15 +517,15 @@ function viewArtwork(selection,index) {
 artworkViewer.querySelector('button').onclick=()=>artworkViewer.close();
 artworkViewer.addEventListener('click',event=>{if(event.target===artworkViewer)artworkViewer.close()});
 const features = [
-  [['了解你','#665647','#eee8dc'],['为你设计','#665647','#eee8dc'],['陪你推进','#665647','#eee8dc']],
+  [['求职规划','#665647','#eee8dc'],['定制成长','#665647','#eee8dc'],['全程陪跑','#665647','#eee8dc']],
   [['服务范围','#9c634d','#efd6bc'],['交付内容','#aa745b','#f2dfbf'],['作品案例','#7c7491','#e2ddec']],
   [['服务范围','#546c59','#d8e3cb'],['交付内容','#617a83','#d6e5e5'],['作品案例','#948058','#eee0c8']],
   [['我们的介绍','#776b5e','#e1cfbd']]
 ];
 const careerServices = [
-  {title:'了解你', image:'assets/career/understand-v2.webp', alt:'了解你：梳理个人条件与诉求，分析方向与能力差距。看清方向与差距，形成适合你的行动路线。'},
-  {title:'为你设计', image:'assets/career/tailor-v2.webp', alt:'为你设计：结合 LLM 职业目标，匹配产品、AI Coding、RAG、Agent、MCP 与业务领域实践。围绕需求、架构、实现与评测，做出自己的 AI 作品，讲清方案与工程取舍。'},
-  {title:'陪你推进', image:'assets/career/accompany-v2.webp', alt:'陪你推进：跟进执行，打磨简历与 Agent 项目，模拟面试、复盘调整，提供阶段反馈。每个阶段都有反馈，让下一步更清楚。'}
+  {title:'求职规划', image:'assets/career/understand-v3.webp', alt:'求职规划：梳理个人条件与诉求，分析方向与能力差距。看清方向与差距，形成适合你的行动路线。'},
+  {title:'定制成长', image:'assets/career/tailor-v3.webp', alt:'定制成长：结合 LLM 职业目标，匹配产品、AI Coding、RAG、Agent、MCP 与业务领域实践。围绕需求、架构、实现与评测开展实践。从知识到实战，加速匹配目标岗位。'},
+  {title:'全程陪跑', image:'assets/career/accompany-v3.webp', alt:'全程陪跑：跟进执行，打磨简历与 Agent 项目，模拟面试、复盘调整，提供阶段反馈。每个阶段都有反馈，让下一步更清楚。'}
 ];
 const careerIndex=document.querySelector('.career-index');
 careerServices.forEach((service,i)=>{
