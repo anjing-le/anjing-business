@@ -28,3 +28,20 @@
   .stage .product-hand .feature {touch-action:pan-x pinch-zoom}
   .stage .product-hand .feature .face .scene {filter:none;mix-blend-mode:normal;mask:none;-webkit-mask:none}
 }
+
+/* Keep the complete service set visible; tap a sheet to read the full-size artwork. */
+@media(max-width:600px) {
+  .stage .hand.product-hand,.stage.both-open .hand.product-hand {
+    --card-width:44vw;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px;align-items:center;justify-content:center;left:0;transform:none;width:100%;
+    padding:12px 4vw;bottom:max(29px,calc(env(safe-area-inset-bottom) + 22px));
+    overflow:visible;scroll-snap-type:none;touch-action:pan-y pinch-zoom;
+  }
+  .stage .product-hand .feature,.stage .hand.career-hand .feature {
+    width:100%;height:auto;aspect-ratio:1.25;margin:0;min-width:0;touch-action:manipulation;
+  }
+  .stage .product-hand[data-card-count="3"] .feature:last-child {
+    grid-column:1 / -1;width:calc((100% - 12px)/2);justify-self:center;
+  }
+  .stage .product-hand .feature.show .face {transform:none}
+}
