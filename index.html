@@ -293,6 +293,7 @@ body { margin:0; color:#282a25; background:#edeae2; font-family:"Helvetica Neue"
   <div class="unit cs"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><button class="badge-toggle" aria-label="特定业务" aria-expanded="false"></button><div class="badge-turn"><div class="badge front"></div><div class="badge reverse"><div class="print product-print"></div></div><span class="name" aria-hidden="true">特定业务</span></div></div></div></div></div>
   <div class="unit person"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><div class="badge-turn"><div class="badge front"><img class="portrait" src="assets/personal/wood-front-small.webp" width="384" height="384" decoding="async" fetchpriority="high" alt="" draggable="false"></div><div class="badge reverse" aria-hidden="true"><div class="print personal-print"></div></div></div><button class="badge-toggle" aria-label="安静名片 · 我们的介绍" aria-expanded="false"></button></div></div></div></div>
   <section class="hand product-hand" aria-label="商务介绍" hidden></section>
+  <nav class="career-index" aria-label="知识付费服务" hidden></nav>
   <section class="hand personal-hand" aria-label="我们的介绍" hidden></section>
 </main>
 <dialog class="art-viewer" aria-labelledby="artwork-title">
@@ -516,16 +517,28 @@ function viewArtwork(selection,index) {
 artworkViewer.querySelector('button').onclick=()=>artworkViewer.close();
 artworkViewer.addEventListener('click',event=>{if(event.target===artworkViewer)artworkViewer.close()});
 const features = [
-  [['求职规划','#665647','#eee8dc'],['定制培养','#665647','#eee8dc'],['全程陪跑','#665647','#eee8dc']],
+  [['了解你','#665647','#eee8dc'],['为你设计','#665647','#eee8dc'],['陪你推进','#665647','#eee8dc']],
   [['服务范围','#9c634d','#efd6bc'],['交付内容','#aa745b','#f2dfbf'],['作品案例','#7c7491','#e2ddec']],
   [['服务范围','#546c59','#d8e3cb'],['交付内容','#617a83','#d6e5e5'],['作品案例','#948058','#eee0c8']],
   [['我们的介绍','#776b5e','#e1cfbd']]
 ];
 const careerServices = [
-  {number:'01', title:'求职规划', lead:'先看清方向，再开始准备。', items:['梳理个人经历、能力与职业诉求','分析目标方向，明确差距与优先级','制定适合个人节奏的准备计划'], output:'个人分析 · 方向建议 · 阶段计划'},
-  {number:'02', title:'定制培养', lead:'按你的起点，设计成长路径。', items:['围绕规划，量身安排学习与实践','结合任务与项目，提供指导和反馈','通过阶段评估，持续调整培养方案'], output:'培养方案 · 实践任务 · 指导反馈'},
-  {number:'03', title:'全程陪跑', lead:'从准备到求职，一起持续推进。', items:['在约定周期内跟进进度、答疑解惑','模拟面试，复盘真实面试中的问题','根据实际进展，调整下一步行动'], output:'进度跟进 · 面试复盘 · 动态调整'}
+  {number:'01', title:'了解你', image:'assets/career/understand-v1.webp', steps:['现有条件与诉求','方向与差距分析','个人路线'], alt:'梳理个人背景与目标，分析能力差距，形成个人路线图', output:'一份个人规划', detail:'明确目标方向、能力差距与分阶段行动'},
+  {number:'02', title:'为你设计', image:'assets/career/tailor-v1.webp', steps:['你的起点与目标','匹配教学资源','定制培养'], alt:'根据个人起点与目标，匹配学习和实践资源，安排专属培养', output:'专属培养与指导', detail:'学什么、做什么项目、每个阶段如何指导'},
+  {number:'03', title:'陪你推进', image:'assets/career/accompany-v1.webp', steps:['跟进任务与求职','评审成果与面试','反馈与调整'], alt:'跟进执行和求职，评审项目及模拟面试，复盘并调整下一步行动', output:'看得见的阶段反馈', detail:'做得怎样、如何改进、下一步做什么'}
 ];
+const careerIndex=document.querySelector('.career-index');
+careerServices.forEach((service,i)=>{
+  const button=document.createElement('button');button.type='button';button.textContent=service.title;
+  button.onclick=()=>{
+    const card=document.querySelector('.career-hand')?.children[i];
+    if(!card)return;
+    card.focus({preventScroll:true});
+    card.scrollIntoView({behavior:reduced.matches?'auto':'smooth',block:'nearest',inline:'center'});
+  };
+  careerIndex.append(button);
+});
+
 function handRenderer(hand) {
   function highlight(button) {
     for(const card of hand.children) card.classList.toggle('show',card===button);
@@ -586,6 +599,7 @@ function handRenderer(hand) {
   return function renderHand(selection) {
     clearTimeout(closeTimer);
     const opening=selection!==null;
+    if(hand.classList.contains('product-hand'))careerIndex.hidden=selection!==0;
     const card=cards[opening?selection:lastSelection];
     const remaining=card?Math.abs(Number(opening)-card.turn):0;
     const duration=reduced.matches?0:turnDurationMs*remaining;
@@ -622,7 +636,7 @@ function handRenderer(hand) {
       button.style.setProperty('--gather-x',(-offset*35)+'%');
       const spread=selection===3?offset:offset/Math.max(1,(pack.length-1)/2);
       button.style.setProperty('--fan-shift',-spread/2);
-      button.style.setProperty('--tilt',spread*(selection===3?3:14)+'deg');
+      button.style.setProperty('--tilt',spread*(selection===0?6:selection===3?3:14)+'deg');
       button.style.setProperty('--dip',Math.abs(spread)*.9+'svh');
       button.style.setProperty('--order',i/Math.max(1,pack.length-1));
       button.style.setProperty('--delay','calc(var(--motion-duration) * .22 * var(--order))');
@@ -638,15 +652,18 @@ function handRenderer(hand) {
         const title=document.createElement('span');title.className='career-title';title.textContent=service.title;
         const number=document.createElement('span');number.className='career-number';number.textContent=service.number;
         top.append(title,number);
-        const context=document.createElement('span');context.className='career-context';context.textContent='LLM 时代 · 职业培养';
-        const lead=document.createElement('span');lead.className='career-lead';lead.textContent=service.lead;
-        const list=document.createElement('span');list.className='career-list';
-        for(const text of service.items){const item=document.createElement('span');item.textContent=text;list.append(item)}
+        const process=document.createElement('span');process.className='career-process';
+        const art=document.createElement('img');art.className='career-illustration';
+        art.src=service.image;art.alt=service.alt;art.width=768;art.height=512;art.decoding='async';art.draggable=false;
+        const steps=document.createElement('span');steps.className='career-steps';
+        for(const text of service.steps){const item=document.createElement('span');item.textContent=text;steps.append(item)}
+        process.append(art,steps);
         const output=document.createElement('span');output.className='career-output';
-        const outputLabel=document.createElement('span');outputLabel.textContent='你将获得';
-        const outputCopy=document.createElement('span');outputCopy.textContent=service.output;
-        output.append(outputLabel,outputCopy);
-        face.append(top,context,lead,list,output);
+        const outputLabel=document.createElement('span');outputLabel.className='career-output-label';outputLabel.textContent='你将获得';
+        const outputCopy=document.createElement('span');outputCopy.className='career-output-title';outputCopy.textContent=service.output;
+        const detail=document.createElement('span');detail.className='career-output-detail';detail.textContent=service.detail;
+        output.append(outputLabel,outputCopy,detail);
+        face.append(top,process,output);
       } else if(selection===3) {
         face.classList.add('profile-face');
         const topic=document.createElement('span');
