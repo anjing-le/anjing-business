@@ -516,10 +516,15 @@ function viewArtwork(selection,index) {
 artworkViewer.querySelector('button').onclick=()=>artworkViewer.close();
 artworkViewer.addEventListener('click',event=>{if(event.target===artworkViewer)artworkViewer.close()});
 const features = [
-  [['服务范围','#477296','#d2e4ed'],['交付内容','#667097','#dedff1'],['作品案例','#557f73','#d6e7d8']],
+  [['求职规划','#665647','#eee8dc'],['定制培养','#665647','#eee8dc'],['全程陪跑','#665647','#eee8dc']],
   [['服务范围','#9c634d','#efd6bc'],['交付内容','#aa745b','#f2dfbf'],['作品案例','#7c7491','#e2ddec']],
   [['服务范围','#546c59','#d8e3cb'],['交付内容','#617a83','#d6e5e5'],['作品案例','#948058','#eee0c8']],
   [['我们的介绍','#776b5e','#e1cfbd']]
+];
+const careerServices = [
+  {number:'01', title:'求职规划', lead:'先看清方向，再开始准备。', items:['梳理个人经历、能力与职业诉求','分析目标方向，明确差距与优先级','制定适合个人节奏的准备计划'], output:'个人分析 · 方向建议 · 阶段计划'},
+  {number:'02', title:'定制培养', lead:'按你的起点，设计成长路径。', items:['围绕规划，量身安排学习与实践','结合任务与项目，提供指导和反馈','通过阶段评估，持续调整培养方案'], output:'培养方案 · 实践任务 · 指导反馈'},
+  {number:'03', title:'全程陪跑', lead:'从准备到求职，一起持续推进。', items:['在约定周期内跟进进度、答疑解惑','模拟面试，复盘真实面试中的问题','根据实际进展，调整下一步行动'], output:'进度跟进 · 面试复盘 · 动态调整'}
 ];
 function handRenderer(hand) {
   function highlight(button) {
@@ -602,6 +607,7 @@ function handRenderer(hand) {
     hand.replaceChildren();
     hand.hidden=false;
     hand.classList.toggle('macos-hand',selection===0);
+    hand.classList.toggle('career-hand',selection===0);
     hand.classList.toggle('cs-hand',selection===2);
     hand.classList.toggle('english-hand',selection===1);
     const pack=features[selection];
@@ -624,7 +630,24 @@ function handRenderer(hand) {
       button.style.setProperty('--tint',tint);
       const face=document.createElement('span');
       face.className='face';
-      if(selection===3) {
+      if(selection===0) {
+        const service=careerServices[i];
+        face.classList.add('career-face');
+        const top=document.createElement('span');
+        top.className='career-top';
+        const title=document.createElement('span');title.className='career-title';title.textContent=service.title;
+        const number=document.createElement('span');number.className='career-number';number.textContent=service.number;
+        top.append(title,number);
+        const context=document.createElement('span');context.className='career-context';context.textContent='LLM 时代 · 职业培养';
+        const lead=document.createElement('span');lead.className='career-lead';lead.textContent=service.lead;
+        const list=document.createElement('span');list.className='career-list';
+        for(const text of service.items){const item=document.createElement('span');item.textContent=text;list.append(item)}
+        const output=document.createElement('span');output.className='career-output';
+        const outputLabel=document.createElement('span');outputLabel.textContent='你将获得';
+        const outputCopy=document.createElement('span');outputCopy.textContent=service.output;
+        output.append(outputLabel,outputCopy);
+        face.append(top,context,lead,list,output);
+      } else if(selection===3) {
         face.classList.add('profile-face');
         const topic=document.createElement('span');
         topic.className='profile-title';
@@ -645,7 +668,7 @@ function handRenderer(hand) {
       button.append(face);
       button.onfocus=()=>highlight(button);
       button.onblur=()=>highlight(null);
-      button.onclick=()=>{highlight(button);viewArtwork(selection,i)};
+      button.onclick=()=>{highlight(button);if(selection!==0)viewArtwork(selection,i)};
       hand.append(button);
     });
     highlight(null);
