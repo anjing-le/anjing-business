@@ -523,9 +523,9 @@ const features = [
   [['我们的介绍','#776b5e','#e1cfbd']]
 ];
 const careerServices = [
-  {number:'01', title:'了解你', image:'assets/career/understand-v1.webp', steps:['现有条件与诉求','方向与差距分析','个人路线'], alt:'梳理个人背景与目标，分析能力差距，形成个人路线图', output:'一份个人规划', detail:'明确目标方向、能力差距与分阶段行动'},
-  {number:'02', title:'为你设计', image:'assets/career/tailor-v1.webp', steps:['你的起点与目标','匹配教学资源','定制培养'], alt:'根据个人起点与目标，匹配学习和实践资源，安排专属培养', output:'专属培养与指导', detail:'学什么、做什么项目、每个阶段如何指导'},
-  {number:'03', title:'陪你推进', image:'assets/career/accompany-v1.webp', steps:['跟进任务与求职','评审成果与面试','反馈与调整'], alt:'跟进执行和求职，评审项目及模拟面试，复盘并调整下一步行动', output:'看得见的阶段反馈', detail:'做得怎样、如何改进、下一步做什么'}
+  {title:'了解你', image:'assets/career/understand-v2.webp', alt:'了解你：梳理个人条件与诉求，分析方向与能力差距。看清方向与差距，形成适合你的行动路线。'},
+  {title:'为你设计', image:'assets/career/tailor-v2.webp', alt:'为你设计：结合 LLM 职业目标，匹配产品、AI Coding、RAG、Agent、MCP 与业务领域实践。围绕需求、架构、实现与评测，做出自己的 AI 作品，讲清方案与工程取舍。'},
+  {title:'陪你推进', image:'assets/career/accompany-v2.webp', alt:'陪你推进：跟进执行，打磨简历与 Agent 项目，模拟面试、复盘调整，提供阶段反馈。每个阶段都有反馈，让下一步更清楚。'}
 ];
 const careerIndex=document.querySelector('.career-index');
 careerServices.forEach((service,i)=>{
@@ -647,23 +647,9 @@ function handRenderer(hand) {
       if(selection===0) {
         const service=careerServices[i];
         face.classList.add('career-face');
-        const top=document.createElement('span');
-        top.className='career-top';
-        const title=document.createElement('span');title.className='career-title';title.textContent=service.title;
-        const number=document.createElement('span');number.className='career-number';number.textContent=service.number;
-        top.append(title,number);
-        const process=document.createElement('span');process.className='career-process';
-        const art=document.createElement('img');art.className='career-illustration';
-        art.src=service.image;art.alt=service.alt;art.width=768;art.height=512;art.decoding='async';art.draggable=false;
-        const steps=document.createElement('span');steps.className='career-steps';
-        for(const text of service.steps){const item=document.createElement('span');item.textContent=text;steps.append(item)}
-        process.append(art,steps);
-        const output=document.createElement('span');output.className='career-output';
-        const outputLabel=document.createElement('span');outputLabel.className='career-output-label';outputLabel.textContent='你将获得';
-        const outputCopy=document.createElement('span');outputCopy.className='career-output-title';outputCopy.textContent=service.output;
-        const detail=document.createElement('span');detail.className='career-output-detail';detail.textContent=service.detail;
-        output.append(outputLabel,outputCopy,detail);
-        face.append(top,process,output);
+        const art=document.createElement('img');art.className='career-card-art';
+        art.src=service.image;art.alt=service.alt;art.width=1280;art.height=1024;art.decoding='async';art.draggable=false;
+        face.append(art);
       } else if(selection===3) {
         face.classList.add('profile-face');
         const topic=document.createElement('span');

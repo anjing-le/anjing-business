@@ -1,0 +1,39 @@
+# 整张职业服务卡面 V2
+
+### 为你设计：强化作品与工程能力目标
+
+Refine this complete career card to emphasize a tangible professional capability and credible portfolio result. Keep EXACT overall design: flat 5:4 whole card, centered title '为你设计', identical two rules, same uniform warm ivory paper, same colored-pencil style and four middle panels, no separate text boxes or new subtitle. Keep left profile 'LLM方向' and personalized selection arrows. Keep the four main integrated labels '产品', '开发', '技术', '领域'. 产品 retains 智能问答 but add a tiny wireframe/requirements note to express product judgment. 开发 laptop now clearly says 'AI Coding' above a code + checkmark drawing, to mean learning to build with AI and validate code. 技术 uses clear readable 'RAG', 'Agent', 'MCP' alongside simple document, task and tool-connector icons (these are example directions, no sprawling curriculum). 领域 retains 业务知识. On right change the workbook main word '实践' to 'AI作品'. Draw a small real knowledge-base/chat product on screen, then a clear process embedded in the workbook: '需求 → 架构 → 实现 → 评测'. Three short checklist entries below it, exactly '可演示', '讲清取舍', '验证效果'. This workbook shows a personally built product and evidence of engineering ability, not a certificate or guaranteed employment. REPLACE the bottom sentence with exactly '做出自己的 AI 作品，讲清方案与工程取舍'. No other words below the lower line. Keep Chinese correct and legible at small size. No '你将获得', no title levels, no dense paragraphs. Do not add job-title promises, pretraining or reinforcement-learning courses. Preserve restrained palette and all original layout proportions.
+
+
+使用内置 imagegen；标题、两条分割线、中部图示、底部一句说明均在生成图内。网页不再绘制标题、段落或交付标题，只承载完整卡面和交互。旧版素材保留。
+
+## 原图和网页文件
+
+- `assets/career/source/understand-v2.png` → `assets/career/understand-v2.webp`
+- `assets/career/source/tailor-v2.png` → `assets/career/tailor-v2.webp`
+- `assets/career/source/accompany-v2.png` → `assets/career/accompany-v2.webp`
+
+原图保留在仓库；只发布带内容哈希的 WebP。网页保留完整 alt 描述，以便图片内容被辅助技术读取。
+
+## 内容边界
+
+LLM、智能问答、Agent、RAG、MCP 用作可匹配的项目与技术示例，具体培养按个人目标和实际交付能力确认。不将同行的预训练、强化学习、分布式训练等完整目录直接列为自有服务。不承诺 offer 或求职结果。
+
+## 生成提示词
+
+### 了解你
+
+Use case: infographic-diagram. Edit the supplied career-service card into a NEW complete flat print-ready card face, landscape 5:4 aspect ratio. Reference image is design/content reference, not something to place as an inset. Render the ENTIRE finished card, including Chinese title, two rules, illustration and concise final sentence. No website mockup, no camera perspective, no external drop shadow, no rounded frame; artwork must fill the rectangular canvas edge to edge. ONE consistent very pale warm ivory paper background across the entire card, matching the original outer paper. Absolutely NO tinted rectangle behind the illustration, NO pasted picture panel, NO separated content boxes. Elegant delicate wax-crayon/colored pencil drawing with restrained soft sage, dusty blue and muted ochre, warm charcoal outlines. Top 16%: large beautiful clearly legible centered Chinese handwritten title EXACTLY '了解你'. NO number 01 and no other headings. A thin warm grey hand-drawn horizontal divider below the title, from x7% to93%. Middle 62%: a unified left-to-right visual explanation. Left a personal profile sheet with portrait and icons for education, work and projects, plus a small speech bubble showing a goal flag; integrate only the short Chinese words '条件' and '诉求' INTO these objects. Center a magnifying glass examining strengths checkmark and gaps warning; integrate short text '分析'. Right a personal route map with three milestones, an achievable direction flag and a pencil; integrate short text '规划'. Subtle hand-drawn arrows make cause and result understandable. Labels must be part of the diagram, never a row of captions below an image. Lower 22%: a second thin horizontal divider above one concise single sentence, centered, medium-size simple Chinese calligraphy, EXACT text '看清方向与差距，形成适合你的行动路线'. This sentence is the only text below the lower line, no subheading. No '你将获得', no '一份个人规划', no slogan, no bullet list. Large simple illustration, generous breathing room, text sharp at small web-card size. All Chinese text spelled exactly. Keep all content inside 7% safe margins. Overall integrated editorial art, not a poster full of words.
+
+### 为你设计
+
+Use case: infographic-diagram. Create a NEW complete companion card matching the provided finished card's EXACT overall style, proportions and layout: flat landscape 5:4 print artwork, single continuous very pale warm ivory paper background, large centered dark-brown Chinese brush title, thin warm grey horizontal rules above and below the illustration, restrained colored-pencil / wax-crayon pastel blue sage ochre peach. The provided image is ONLY the style and layout reference, not something to place inside this image. ENTIRE card is the generated image including all text and rules. NO outer card border, no perspective, no external shadow, no inset image panel, no tinted middle rectangle, no website UI. Title centered in top 16%, EXACTLY '为你设计'. Thin divider at 21% height. Unified middle visual from 27% to77%: On left a small profile sheet and goal flag representing individual starting point and desired direction, text '目标' integrated into its flag. Arrows flow to a central group of FOUR concrete learning/project resources arranged neatly 2 by2: a product wireframe board with simple prototype sketches and integrated word '产品'; a laptop with code brackets and an API connection diagram, integrated word '开发'; a small toolbox with data/code practice blocks integrated word '技术'; domain-specific reference documents and a small industry scene chart, integrated word '领域'. These four options converge via restrained pencil arrows into ONE personalized hands-on project workbook on right, with a product screen sketch, implementation checklist and a little pencil, integrated word '实践'. Visual means choose matching product, development, technical and domain learning and projects according to this particular person's goal, rather than generic study resources. Large simple shapes, avoid clutter, no false success claim, no named industry restriction. All labels integrated into objects, NO caption row beneath drawing. A second thin horizontal rule at81%. At bottom exactly ONE centered medium-sized sentence in warm charcoal Chinese handwriting: '围绕你的目标，定制学习、项目与指导'. This sentence is the only bottom copy, no output subheading. No '你将获得', no numbers, no other text. Match reference title size, line spacing, safe margins and soft paper palette; all Chinese lettering must be clear and correctly spelled.
+
+### 为你设计：加入 LLM 项目语境
+
+Edit this complete card with a SMALL focused content revision. Preserve its exact 5:4 canvas, centered title '为你设计', both horizontal rules, uniform ivory paper, crayon style, all positions and the exact bottom sentence '围绕你的目标，定制学习、项目与指导'. We need to make the LLM-era career content recognizable rather than generic. In the central four panels keep the main words '产品', '开发', '技术', '领域', but add a few legible integrated labels: in the 产品 sketch put '智能问答' as its product example; in the 开发 laptop show a simple three-node tool workflow with the word 'Agent'; in 技术 replace generic toolbox content with a document retrieval and connector diagram, clear labels 'RAG' and 'MCP'; in 领域 keep the domain documents and label one document '业务知识'. In the right 实践 workbook replace the generic mountain-image website with a tiny knowledge-base/chat product and small build checklist, with the short integrated workflow '需求 → 实现 → 评测'. On the left profile change '目标' to 'LLM 方向'. These are examples selected according to the person's target, not a promise of every course. Keep everything simple and sharp at small web-card size, no extra paragraphs, no new subtitle, no output heading, no numbered labels. No other changes.
+
+### 陪你推进
+
+undefined
+
