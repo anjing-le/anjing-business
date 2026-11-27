@@ -51,7 +51,7 @@
 .stage .career-hand .feature.sliding {z-index:20}
 @media(min-width:601px) {
   .stage .hand.career-hand {
-    --card-width:min(37vw,56svh,520px);--fan-width:min(94vw,1450px);
+    --card-width:min(32vw,56svh,500px);--fan-width:calc(var(--card-width)*2.9);
     width:var(--fan-width);bottom:6svh;
   }
   .stage .career-hand .feature {height:calc(var(--card-width)/1.25)}
