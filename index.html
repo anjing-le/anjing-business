@@ -157,7 +157,7 @@ body { margin:0; color:#282a25; background:#edeae2; font-family:"Helvetica Neue"
 @media(prefers-reduced-motion:reduce){.badge-turn{transition:none}.unit.person{animation:none}}
 @media(pointer:fine) {
   html, body {cursor:url("assets/cursors/richfree-cursor-20.png") 0 0,auto}
-  .stage :is(.badge,.badge-toggle,.feature,.platforms button),.viewer-bar button:not(:disabled) {
+  .stage :is(.badge,.badge-toggle,.feature.is-link,.platforms button),.viewer-bar button:not(:disabled) {
     cursor:url("assets/cursors/richfree-pointer-20.png") 7 3,pointer;
   }
   .stage .platforms button[aria-disabled="true"] {cursor:not-allowed}
@@ -423,7 +423,7 @@ function handRenderer(hand) {
   hand.onpointerdown=event=>{
     if(event.pointerType==='touch') return;
     const button=event.target.closest('.feature');
-    if(!button || held || !event.isPrimary || event.button!==0) return;
+    if(!button || !button.classList.contains('is-link') || held || !event.isPrimary || event.button!==0) return;
     const translation=getComputedStyle(button).translate;
     const [dx=0,dy=0]=translation==='none'?[]:translation.split(' ').map(parseFloat);
     held={button,id:event.pointerId,x:event.clientX,y:event.clientY,dx,dy,moved:false};
@@ -475,7 +475,7 @@ function handRenderer(hand) {
   return function renderHand(selection) {
     clearTimeout(closeTimer);
     const opening=selection!==null;
-    if(hand.classList.contains('product-hand'))mobileCardHint.hidden=selection===null||selection===3;
+    if(hand.classList.contains('product-hand'))mobileCardHint.hidden=true;
     const card=cards[opening?selection:lastSelection];
     const remaining=card?Math.abs(Number(opening)-card.turn):0;
     const duration=reduced.matches?0:turnDurationMs*remaining;
@@ -510,9 +510,8 @@ function handRenderer(hand) {
     hand.setAttribute('aria-label',cards[selection].button.getAttribute('aria-label')+' 内容牌');
     pack.forEach(([label,color,tint],i)=>{
       const isProfileLink=selection===3&&!!profileEntries[i].url;
-      const button=document.createElement(isProfileLink?'a':'button');
+      const button=document.createElement(isProfileLink?'a':'article');
       if(isProfileLink) {button.href=profileEntries[i].url;button.target='_blank';button.rel='noopener noreferrer';}
-      else button.type='button';
       button.className='feature';
       button.classList.toggle('is-link',isProfileLink);
       button.setAttribute('aria-label',label);
@@ -556,12 +555,7 @@ function handRenderer(hand) {
       button.append(face);
       button.onfocus=()=>highlight(button);
       button.onblur=()=>highlight(null);
-      button.onclick=event=>{
-        highlight(button);
-        if(matchMedia('(max-width:600px)').matches||(selection===3&&!isProfileLink)) {
-          event.preventDefault();viewArtwork(selection,i);
-        }
-      };
+
       hand.append(button);
     });
     highlight(null);

@@ -143,6 +143,7 @@
 }
 .profile-visit {display:block;margin:12px 16px 16px;padding:10px;text-align:center;color:#624d33;font:400 16px/1.5 "Kaiti SC","STKaiti",serif;background:#eee7da;border-radius:8px}
 .stage .feature.is-link {cursor:pointer}
+.stage .feature:not(.is-link) {cursor:inherit}
 .stage .feature.is-link .face {outline:1.5px solid transparent;outline-offset:4px;transition:outline-color .2s ease,transform .32s ease,box-shadow .32s ease}
 .stage .feature.is-link:is(.show,:hover,:focus-visible) .face {outline-color:#9c8150}
 .card-link-hint {
