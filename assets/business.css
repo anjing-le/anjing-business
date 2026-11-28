@@ -121,11 +121,7 @@
 .person .badge.reverse {visibility:hidden}
 .person .badge {mask:none;-webkit-mask:none}
 .person .badge::after {display:none}
-.person .badge-turn > .name {
-  left:5%;right:5%;bottom:3%;text-align:center;padding:1% 0;
-  font:500 calc(var(--w)*.18)/1.1 "Kaiti SC","STKaiti",serif;letter-spacing:.1em;
-  color:#624733;background:#ecd0a7;border-radius:3px;
-}
+
 .stage .hand.profile-hand {
   display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;
   left:50%;transform:translateX(-50%);width:min(92vw,1360px);bottom:7svh;
