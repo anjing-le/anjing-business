@@ -298,7 +298,45 @@ body { margin:0; color:#282a25; background:#edeae2; font-family:"Helvetica Neue"
   <section class="hand personal-hand" aria-label="我们的介绍" hidden></section>
 </main>
 <section class="service-details" id="service-details" aria-label="服务详情" tabindex="-1" hidden>
-  <article class="detail-paper" aria-label="详情内容"></article>
+  <article class="detail-paper" aria-label="详情内容">
+    <div class="career-plan" hidden>
+      <header class="plan-heading">
+        <p class="plan-eyebrow">知识付费 · 校招 / 社招</p>
+        <h1>求职规划</h1>
+        <p class="plan-intro">看清你的起点，找到值得奔赴的方向。</p>
+        <p class="plan-context">面向 LLM 时代的职业成长，从你的经历与目标出发。</p>
+      </header>
+      <section class="plan-process" aria-label="我们如何一起规划">
+        <div class="plan-step">
+          <span class="plan-number">01</span>
+          <h2>你现在有什么</h2>
+          <p>教育与工作经历、技能与项目<br>当前的困惑、可以投入的时间</p>
+          <span class="plan-note">资料梳理 · 了解起点</span>
+        </div>
+        <div class="plan-step">
+          <span class="plan-number">02</span>
+          <h2>你想走向哪里</h2>
+          <p>目标岗位与领域、求职时间<br>个人偏好与职业期待</p>
+          <span class="plan-note">一对一沟通 · 对齐目标</span>
+        </div>
+        <div class="plan-step">
+          <span class="plan-number">03</span>
+          <h2>我们一起找路径</h2>
+          <p>分析岗位要求与现有基础<br>识别关键差距，排定准备顺序</p>
+          <span class="plan-note">分析与规划 · 明确行动</span>
+        </div>
+      </section>
+      <section class="plan-delivery" aria-label="个人职业规划交付内容">
+        <div class="plan-delivery-title"><span>落在纸上的，是你的下一步</span><h2>一份属于你的职业规划</h2></div>
+        <div class="plan-results">
+          <div><span class="plan-result-mark">↗</span><h3>方向建议</h3><p>优先考虑哪些方向<br>为什么适合你</p></div>
+          <div><span class="plan-result-mark">＋</span><h3>差距清单</h3><p>已有优势如何发挥<br>关键能力还需补什么</p></div>
+          <div><span class="plan-result-mark">→</span><h3>行动路线</h3><p>先做什么、再做什么<br>每个阶段形成什么成果</p></div>
+        </div>
+      </section>
+      <footer class="plan-footer"><p>带上你的经历和目标，我们一起梳理。</p><button type="button" class="plan-contact">聊聊我的规划 <span aria-hidden="true">↗</span></button><span class="plan-contact-status" role="status" aria-live="polite"></span></footer>
+    </div>
+  </article>
 </section>
 <dialog class="art-viewer" aria-labelledby="artwork-title">
   <div class="viewer-bar"><h2 id="artwork-title">商务合作</h2><button type="button" aria-label="关闭详情">×</button></div>
@@ -603,10 +641,21 @@ function openServiceDetail(selection,index,origin) {
   const title=features[selection][index][0];
   detailSection.setAttribute('aria-label',title+'详情');
   detailSection.dataset.service=selection+'-'+index;
+  detailSection.querySelector('.career-plan').hidden=!(selection===0&&index===0);
+  detailSection.querySelector('.plan-contact-status').textContent='';
   detailSection.hidden=false;
   detailSection.focus({preventScroll:true});
   detailSection.scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'start'});
 }
+document.querySelector('.plan-contact').onclick=async()=>{
+  const status=document.querySelector('.plan-contact-status');
+  try {
+    await navigator.clipboard.writeText(contactWechat);
+    status.textContent='已复制微信 '+contactWechat+'，添加时可附上你的经历与目标。';
+  } catch {
+    status.textContent='微信：'+contactWechat+'，添加时可附上你的经历与目标。';
+  }
+};
 for(const c of cards) {
   c.button.onclick=()=>activate(c);
   c.unit.addEventListener('pointerenter',event=>{

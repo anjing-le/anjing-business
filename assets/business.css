@@ -195,3 +195,57 @@ body > .water {position:fixed;inset:0;width:100%;height:100%;z-index:-1}
   box-shadow:inset 1px 1px 1px #ffffffd9,inset -1px -1px 1px #b8b0a047,
     0 1px 0 #d1c8b7,0 2px 0 #c7bfaf,2px 6px 4px #50493922,5px 16px 24px #50493930;
 }
+
+/* Career planning is typeset directly on the same cotton-paper stock. */
+.career-plan {max-width:1160px;height:100%;margin:auto;padding:clamp(18px,2.5vh,28px) clamp(20px,4vw,64px);display:flex;flex-direction:column;justify-content:space-between;gap:14px;color:#554b3d;font-family:"Kaiti SC","STKaiti","KaiTi",serif;overflow:auto;scrollbar-width:thin}
+.career-plan[hidden] {display:none}
+.plan-heading {text-align:center}
+.plan-eyebrow {margin:0 0 8px;color:#95846b;font-size:14px;letter-spacing:.18em}
+.plan-heading h1 {margin:0;font-size:clamp(32px,4vw,54px);font-weight:400;letter-spacing:.16em;text-indent:.16em;line-height:1.25}
+.plan-intro {margin:12px 0 5px;font-size:clamp(18px,1.8vw,24px)}
+.plan-context {margin:0;font-size:15px;color:#8a7d6c;line-height:1.5}
+.plan-process {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;padding:22px 0;border-block:1px solid #ac9b7e66}
+.plan-step {position:relative}
+.plan-step:not(:last-child)::after {content:'→';position:absolute;right:-24px;top:40%;font-size:26px;color:#9ba174}
+.plan-number {font-size:15px;font-style:italic;color:#ac9875}
+.plan-step h2 {font-size:clamp(18px,1.9vw,25px);font-weight:400;margin:6px 0 10px}
+.plan-step p {font-size:15px;line-height:1.85;margin:0;color:#7a6f60}
+.plan-note {display:block;margin-top:12px;color:#938367;font-size:13px}
+.plan-delivery-title {text-align:center}
+.plan-delivery-title>span {color:#a08b6b;font-size:13px;letter-spacing:.12em}
+.plan-delivery-title h2 {font-weight:400;font-size:clamp(23px,2.6vw,32px);margin:5px 0 20px}
+.plan-results {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));text-align:center;gap:20px}
+.plan-results>div+div {border-left:1px dashed #b3a28666}
+.plan-result-mark {display:inline-block;color:#929b71;font-size:27px;line-height:1}
+.plan-results h3 {font-weight:400;font-size:22px;margin:6px 0}
+.plan-results p {margin:0;font-size:15px;line-height:1.65;color:#7a6f60}
+.plan-footer {position:relative;border-top:1px solid #ac9b7e66;padding-top:16px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.plan-footer>p {font-size:16px;margin:0;color:#7a6f60}
+.plan-contact {font:inherit;font-size:17px;color:#6f7751;border:0;border-bottom:1px solid #929b7199;padding:5px 0;background:transparent;cursor:url("cursors/richfree-pointer-20.png") 7 3,pointer}
+.plan-contact:focus-visible {outline:2px solid #9c8150;outline-offset:5px}
+.plan-contact-status {flex-basis:100%;font-size:13px;color:#7a6f60}
+.plan-contact-status:empty {display:none}
+@media(max-width:600px) {
+  .career-plan {padding:24px 18px;gap:18px}
+  .plan-eyebrow {font-size:11px;margin-bottom:8px}
+  .plan-heading h1 {font-size:34px}
+  .plan-intro {font-size:17px;line-height:1.5;margin-top:10px}
+  .plan-context {font-size:12px;max-width:240px;margin:auto}
+  .plan-process {gap:10px;padding:18px 0}
+  .plan-number {font-size:12px}
+  .plan-step h2 {font-size:16px;line-height:1.5;margin:5px 0 8px;max-width:4em}
+  .plan-step p {font-size:12px;line-height:1.7}
+  .plan-step p br {display:none}
+  .plan-step:not(:last-child)::after {right:0;top:28px;font-size:17px}
+  .plan-note {font-size:10px;line-height:1.6;margin-top:8px}
+  .plan-delivery-title>span {font-size:11px;letter-spacing:0}
+  .plan-delivery-title h2 {font-size:23px;margin:6px 0 16px}
+  .plan-results {gap:8px}
+  .plan-result-mark {font-size:23px}
+  .plan-results h3 {font-size:17px;margin:7px 0}
+  .plan-results p {font-size:12px;line-height:1.7}
+  .plan-footer {justify-content:center;text-align:center;padding-top:12px}
+  .plan-footer>p {font-size:13px;width:100%}
+  .plan-contact {font-size:15px}
+  .plan-contact-status {font-size:12px;line-height:1.5}
+}
