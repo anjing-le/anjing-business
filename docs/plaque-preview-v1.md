@@ -1,5 +1,18 @@
 # 主木牌简介与交互
 
+## 定制服务文案与跳转提示
+
+主牌文案改为两行「为你的需求」「专属打造」。内置 imagegen 生成透明文字层，源图 `assets/plaques/source/custom-hand-v2.png`，线上素材 `assets/plaques/custom-hand-v2.webp`。
+
+可跳转卡片在悬停上浮或键盘聚焦时显示暗金色细实线，手机端常驻 ↗ 提示。电脑端整卡跳转；手机端先放大，在大图下通过「访问网站 ↗」跳转。无网址的展示卡片不加跳转标记。
+
+最终图片提示词：
+
+```text
+Edit only the wording of this transparent Chinese lettering asset. Exact first line 为你的需求, exact second line 专属打造. Remove all old words, specifically no 场景 or 工具. Preserve the natural warm dark-brown pencil handwriting, subtle grain, centered two-line composition and spacing of the input, first line slightly smaller, second slightly emphasized. Keep the same canvas size and genuine transparent background. No images, icons, rules, frame or wood background.
+```
+
+
 2026-11-28：主木牌改为纯文字简介。采用 Imagine 生成的透明底自然手写字，暖棕色铅笔质感，不添加插画、图标或说明小字。木纹与环扣仍由原页面渲染。
 
 | 业务 | 简介 |

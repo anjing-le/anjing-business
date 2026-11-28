@@ -310,7 +310,7 @@ const cards = [...document.querySelectorAll('.unit')].map((unit,index) => ({
 const plaqueCovers = [
   {copy:'面向 LLM 时代的职业成长',image:'assets/plaques/learning-hand-v1.webp'},
   {copy:'从业务问题到方案落地',image:'assets/plaques/cooperation-hand-v1.webp'},
-  {copy:'为你的场景，打造专属工具',image:'assets/plaques/custom-hand-v1.webp'}
+  {copy:'为你的需求，专属打造',image:'assets/plaques/custom-hand-v2.webp'}
 ];
 for(const c of cards.filter(c=>c.index<3)) {
   const cover=plaqueCovers[c.index];
@@ -377,7 +377,7 @@ function viewArtwork(selection,index) {
     if(service.url) {
       const link=document.createElement('a');link.className='profile-visit';
       link.href=service.url;link.target='_blank';link.rel='noopener noreferrer';
-      link.textContent='访问 '+service.label;copy.append(link);
+      link.textContent='访问网站 ↗';link.setAttribute('aria-label','访问网站：'+service.label);copy.append(link);
     }
   } else {
     const paragraph=document.createElement('p');
@@ -514,6 +514,7 @@ function handRenderer(hand) {
       if(isProfileLink) {button.href=profileEntries[i].url;button.target='_blank';button.rel='noopener noreferrer';}
       else button.type='button';
       button.className='feature';
+      button.classList.toggle('is-link',isProfileLink);
       button.setAttribute('aria-label',label);
       const offset=i-(pack.length-1)/2;
       button.style.setProperty('--gather-x',(-offset*35)+'%');
@@ -527,6 +528,10 @@ function handRenderer(hand) {
       button.style.setProperty('--tint',tint);
       const face=document.createElement('span');
       face.className='face';
+      if(isProfileLink) {
+        const hint=document.createElement('span');hint.className='card-link-hint';
+        hint.textContent='↗';hint.setAttribute('aria-hidden','true');face.append(hint);
+      }
       if(selection!==3) {
         const service=serviceGroups[selection][i];
         face.classList.add('career-face');
