@@ -130,12 +130,14 @@
   width:100%;height:auto;aspect-ratio:1.25;margin:0;text-decoration:none;color:inherit;
 }
 .stage .profile-hand .feature + .feature {margin-left:0}
-.stage .profile-hand .profile-face {background:#f8f5ed;gap:1.2rem;align-items:center;text-align:center}
+.stage .profile-hand .profile-face {background:#f8f5ed;gap:1rem;padding:8%;align-items:center;justify-content:center;text-align:center}
 .stage .profile-hand .profile-title {font-size:clamp(20px,2.4vw,32px)}
-.stage .profile-hand .profile-summary {font-size:clamp(10px,1.15vw,15px);letter-spacing:0;overflow-wrap:anywhere}
+.stage .profile-hand .profile-summary {font:400 clamp(14px,1.3vw,18px)/1.7 "Kaiti SC","STKaiti",serif;color:#736655;letter-spacing:.03em;overflow-wrap:anywhere}
+.stage .profile-hand .profile-address {font:400 clamp(10px,.9vw,12px)/1.3 Georgia,serif;color:#998d7b;overflow-wrap:anywhere}
 @media(max-width:600px) {
   .stage .hand.profile-hand {left:0;transform:none;width:100%;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;bottom:max(29px,calc(env(safe-area-inset-bottom) + 22px));padding:12px 4vw}
-  .stage .profile-hand .profile-face {padding:10px;gap:12px}
+  .stage .profile-hand .profile-face {padding:12px;gap:9px}
   .stage .profile-hand .profile-title {font-size:20px}
-  .stage .profile-hand .profile-summary {font-size:10px}
+  .stage .profile-hand .profile-summary {font-size:12px;line-height:1.6}
+  .stage .profile-hand .profile-address {font-size:9px}
 }

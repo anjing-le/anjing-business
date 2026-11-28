@@ -387,13 +387,13 @@ const features = [
   [['求职规划','#665647','#eee8dc'],['定制成长','#665647','#eee8dc'],['全程陪跑','#665647','#eee8dc']],
   [['项目咨询','#665647','#eee8dc'],['方案交付','#665647','#eee8dc']],
   [['定制化 WeChat Bot','#665647','#eee8dc']],
-  [['个人主页','#776b5e','#e1cfbd'],['GitHub','#776b5e','#e1cfbd'],['开源作品','#776b5e','#e1cfbd'],['Happy Journey','#776b5e','#e1cfbd']]
+  [['自我介绍','#776b5e','#e1cfbd'],['团队介绍','#776b5e','#e1cfbd'],['开源作品','#776b5e','#e1cfbd'],['Happy Journey','#776b5e','#e1cfbd']]
 ];
 const profileEntries = [
-  {url:'https://anjing.cc/',label:'anjing.cc'},
-  {url:'https://github.com/anjing-le',label:'github.com/anjing-le'},
-  {url:'https://product.anjing.cc/',label:'product.anjing.cc'},
-  {url:'https://happy-journey.anjing.cc/',label:'happy-journey.anjing.cc'}
+  {url:'https://anjing.cc/',label:'anjing.cc',summary:'深耕计算机，探索金融与音乐，持续学习，不断创造。'},
+  {url:null,label:'',summary:'汇集 LLM 工程、算法、HR 与业务专家，协同解决实际问题。'},
+  {url:'https://product.anjing.cc/',label:'product.anjing.cc',summary:'把想法做成工具与项目，用作品呈现能力。'},
+  {url:'https://happy-journey.anjing.cc/',label:'happy-journey.anjing.cc',summary:'连接垂直领域的知识与实践，让探索成为有方向的学习之旅。'}
 ];
 const careerServices = [
   {title:'求职规划', image:'assets/career/understand-v3.webp', alt:'求职规划：梳理个人条件与诉求，分析方向与能力差距。看清方向与差距，形成适合你的行动路线。'},
@@ -504,8 +504,9 @@ function handRenderer(hand) {
     hand.dataset.cardCount=pack.length;
     hand.setAttribute('aria-label',cards[selection].button.getAttribute('aria-label')+' 内容牌');
     pack.forEach(([label,color,tint],i)=>{
-      const button=document.createElement(selection===3?'a':'button');
-      if(selection===3) {button.href=profileEntries[i].url;button.target='_blank';button.rel='noopener noreferrer';}
+      const isProfileLink=selection===3&&!!profileEntries[i].url;
+      const button=document.createElement(isProfileLink?'a':'button');
+      if(isProfileLink) {button.href=profileEntries[i].url;button.target='_blank';button.rel='noopener noreferrer';}
       else button.type='button';
       button.className='feature';
       button.setAttribute('aria-label',label);
@@ -534,8 +535,12 @@ function handRenderer(hand) {
         topic.textContent=label;
         const summary=document.createElement('span');
         summary.className='profile-summary';
-        summary.textContent=profileEntries[i].label;
+        summary.textContent=profileEntries[i].summary;
         face.append(topic,summary);
+        if(profileEntries[i].label) {
+          const address=document.createElement('span');address.className='profile-address';
+          address.textContent=profileEntries[i].label;face.append(address);
+        }
       } else {
         const caption=document.createElement('span');
         caption.className='fan-caption';

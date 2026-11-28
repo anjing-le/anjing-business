@@ -60,3 +60,12 @@ Edit the input lettering layer: change ONLY the lettering STYLE to match the nat
 ## 安静个人名牌与入口
 
 2026-11-28：安静个人名牌统一为顶部收起、下拉露出约95%、悬停联动、点击固定和点击空白收回。保留人物木牌素材，隐藏挂带与金属环。下方先设置四个入口：个人主页 https://anjing.cc/；GitHub https://github.com/anjing-le；开源作品暂接现有作品站 https://product.anjing.cc/；Happy Journey https://happy-journey.anjing.cc/。本轮只确定名称与网址，具体介绍与卡片内容待共同设计。手机端四张入口为两行两列。
+
+## 四张介绍卡片文案首版
+
+- 自我介绍：深耕计算机，探索金融与音乐，持续学习，不断创造。
+- 团队介绍：汇集 LLM 工程、算法、HR 与业务专家，协同解决实际问题。
+- 开源作品：把想法做成工具与项目，用作品呈现能力。
+- Happy Journey：连接垂直领域的知识与实践，让探索成为有方向的学习之旅。
+
+2026-11-28：上述文案经用户确认先发布，之后逐卡打磨。团队介绍替换原 GitHub 卡片，尚无团队独立落地页，先只展示介绍；其他三张保留现有网站入口。
