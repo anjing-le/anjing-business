@@ -116,7 +116,8 @@
 }
 @media(prefers-reduced-motion:reduce) {.unit:not(.person) .rig {transition:none}}
 
-/* The personal plaque uses the same concealed slide; keep its portrait and wood. */
+/* The portrait stays visible at rest and drops a little further on preview. */
+.person .rig {transform:translateY(calc(var(--w)*-.12))}
 .person .badge-turn {transform:none!important}
 .person .badge.reverse {visibility:hidden}
 .person .badge {mask:none;-webkit-mask:none}
