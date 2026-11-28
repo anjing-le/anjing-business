@@ -298,7 +298,7 @@ body { margin:0; color:#282a25; background:#edeae2; font-family:"Helvetica Neue"
   <section class="hand personal-hand" aria-label="我们的介绍" hidden></section>
 </main>
 <section class="service-details" id="service-details" aria-label="服务详情" tabindex="-1" hidden>
-  <button type="button" class="detail-back">↑ 返回选服务</button>
+  <article class="detail-paper" aria-label="详情内容"></article>
 </section>
 <dialog class="art-viewer" aria-labelledby="artwork-title">
   <div class="viewer-bar"><h2 id="artwork-title">商务合作</h2><button type="button" aria-label="关闭详情">×</button></div>
@@ -596,11 +596,9 @@ function handRenderer(hand) {
 }
 const showProductHand=handRenderer(document.querySelector(".product-hand"));
 const detailSection=document.querySelector('.service-details');
-let detailOrigin=null;
 function openServiceDetail(selection,index,origin) {
   cancelPreviewClose();
   pinnedProduct=selection;
-  detailOrigin=origin;
   document.querySelectorAll('.feature[aria-controls="service-details"]').forEach(e=>e.setAttribute('aria-expanded',String(e===origin)));
   const title=features[selection][index][0];
   detailSection.setAttribute('aria-label',title+'详情');
@@ -609,10 +607,6 @@ function openServiceDetail(selection,index,origin) {
   detailSection.focus({preventScroll:true});
   detailSection.scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'start'});
 }
-document.querySelector('.detail-back').onclick=()=>{
-  stage.scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'start'});
-  detailOrigin?.focus({preventScroll:true});
-};
 for(const c of cards) {
   c.button.onclick=()=>activate(c);
   c.unit.addEventListener('pointerenter',event=>{
