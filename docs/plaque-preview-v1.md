@@ -48,3 +48,7 @@ Edit the input lettering layer: change ONLY the lettering STYLE to match the nat
 ```
 
 
+
+## 材质与尺寸补充
+
+2026-11-28：业务标题上方增加 CSS 内凹木刻分割线，使用槽内暗影与下缘反光模拟刻痕。主牌金属环加宽加厚，上端通过短金属连接件延伸到页面顶部，避免悬空。三组服务卡片采用相同基础尺寸，单张也不放大，移动端单卡居中并与双列中的卡片等宽。
