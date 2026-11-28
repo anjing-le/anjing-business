@@ -1,5 +1,17 @@
 # 定制化 WeChat Bot 服务卡片 V1
 
+## 卡面 V2：移除底部小字
+
+按用户要求，使用内置 imagegen 仅移除卡面底部“文本与截图可能发送至模型服务商”一行，保留主句、图示与版式；网页图片替代描述同步移除此句。V1 原图作为历史版本保留，原项目数据边界说明仍见原项目文档。
+
+- 原图：`assets/custom/source/wechat-bot-v2.png`
+- 网页图：`assets/custom/wechat-bot-v2.webp`
+
+### V2 编辑提示词
+
+Make ONE precise edit to this image: remove ONLY the smallest bottom line of text '文本与截图可能发送至模型服务商'. Fill the vacated bottom line area with matching pale warm ivory paper texture. Do not crop the image, do not resize or shift any element, preserve canvas5:4. Keep the large bottom main sentence EXACTLY '按你的群聊场景，定制有记忆的 AI 伙伴', at the exact same position and size. Keep top centered title '定制化 WeChat Bot', the full illustration, every other Chinese word, all colors, paper texture, divider lines and entire layout identical. No new text, no replacement footnote. The only intended change is clean empty paper where that smallest bottom line used to be.
+
+
 2026-11-28：第三个一级吊牌从“特定业务”改为“定制服务”。首个二级卡片名称为“定制化 WeChat Bot”，不填充其他未确定服务。
 
 ## 内容与来源
