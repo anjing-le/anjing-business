@@ -307,9 +307,23 @@ const cards = [...document.querySelectorAll('.unit')].map((unit,index) => ({
   unit, index, rig:unit.querySelector('.rig'), joint:unit.querySelector('.joint'), button:unit.querySelector('.badge-toggle'),
   turn:0, turnTarget:0, offsetX:0, speedX:0, length:0, velocity:0, angle:0, spin:0, target:0, restAngle:[-2,1.6,-1.1,1.3][index]
 }));
+const plaqueCovers = [
+  {copy:'面向 LLM 时代的职业成长',image:'assets/plaques/learning-hand-v1.webp'},
+  {copy:'从业务问题到方案落地',image:'assets/plaques/cooperation-hand-v1.webp'},
+  {copy:'为你的场景，打造专属工具',image:'assets/plaques/custom-hand-v1.webp'}
+];
+for(const c of cards.filter(c=>c.index<3)) {
+  const cover=plaqueCovers[c.index];
+  const front=c.unit.querySelector('.badge.front');
+  front.setAttribute('aria-hidden','true');
+  const art=document.createElement('img');art.className='plaque-intro';art.src=cover.image;art.alt='';art.width=640;art.height=800;art.draggable=false;art.decoding='async';
+  front.append(art);
+  c.button.setAttribute('aria-description',cover.copy);
+  c.hovered=false;
+}
 // Sample a flat woven strip. The curve has zero slope at both attachments.
 const bandCount=16;
-for(const card of cards) {
+for(const card of cards.filter(card=>card.index===3)) {
   const strap=card.unit.querySelector('.strap');
   card.bands=Array.from({length:bandCount},()=>strap.appendChild(document.createElement('i')));
   card.flex=card.flexSpeed=0;
@@ -437,6 +451,7 @@ function animate(time) {
   const dt=Math.min(elapsed,.05);
   let active=false;
   for (const c of cards) {
+    if(c.index<3)continue;
     if(advanceTurn(c,elapsed)) active=true;
     if(reduced.matches) c.flex=c.flexSpeed=0;
     else {
@@ -468,6 +483,28 @@ function animate(time) {
 function wake() { if(!frame) {lastTime=performance.now();frame=requestAnimationFrame(animate)} }
 function layout(initial=false) {
   for (const c of cards) {
+    if(c.index<3) {
+      const height=c.button.offsetHeight;
+      const width=c.button.offsetWidth;
+      const peek=Math.max(44,Math.min(72,height*.2));
+      const drop=Math.max(16,width*.11);
+      const selected=product===c.index;
+      const preview=c.hovered||(document.activeElement===c.button&&c.button.matches(':focus-visible'));
+      const down=selected||preview;
+      c.unit.style.setProperty('--board-height',height+'px');
+      c.unit.style.setProperty('--peek-height',peek+'px');
+      c.unit.style.setProperty('--drop-y',drop+'px');
+      c.unit.classList.toggle('is-down',down);
+      c.unit.classList.toggle('selected',selected);
+      c.unit.classList.remove('turned');
+      c.button.setAttribute('aria-expanded',String(selected));
+      if(initial) {c.rig.style.transition='none';requestAnimationFrame(()=>c.rig.style.removeProperty('transition'));}
+      c.rig.style.transform='translateY('+(down?drop:peek-height)+'px)';
+      c.rig.style.setProperty('--hardware-turn','0deg');
+      c.turn=selected?1:0;
+      c.turnTarget=0;
+      continue;
+    }
     const {high,low,tucked}=positions(c);
     const personal=c.unit.classList.contains('person');
     const down=personal?personalOpen:product===c.index;
@@ -704,6 +741,22 @@ function rotatePoint(x,y,degrees) {
 for(const c of cards) {
   const mount=c.button.closest('.mount');
   c.button.onclick=()=>activate(c);
+  if(c.index<3) {
+    c.unit.addEventListener('pointerenter',event=>{
+      if(event.pointerType==='touch')return;
+      c.hovered=true;layout();
+    });
+    c.unit.addEventListener('pointerleave',event=>{
+      if(event.pointerType==='touch')return;
+      c.hovered=false;layout();
+    });
+    c.button.addEventListener('focus',()=>layout());
+    c.button.addEventListener('blur',()=>layout());
+    c.button.addEventListener('keydown',event=>{
+      if(event.key==='Escape') {setOpen(c,false);c.hovered=false;c.button.blur();layout();}
+    });
+    continue;
+  }
   mount.onpointerdown=e=>{
     if(!e.isPrimary||e.button!==0||drag||e.target!==c.button) return;
     c.unit.classList.add('pulled');

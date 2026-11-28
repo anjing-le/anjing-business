@@ -83,3 +83,32 @@
 @media(min-width:601px) {
   .stage .hand.custom-hand {--card-width:min(52vw,70svh,650px)}
 }
+
+/* Business plaques: a readable tab at rest, a short-ring slide-down preview on hover. */
+.stage .unit:not(.person) {
+  height:var(--peek-height,56px);animation:none;rotate:0deg;perspective:none;
+}
+.stage .unit:not(.person).is-down {height:calc(var(--board-height) + var(--drop-y))}
+.unit:not(.person) .rig {
+  padding-top:0;transform:translateY(calc(var(--peek-height,56px) - var(--w)/.78));transition:transform .48s cubic-bezier(.22,.75,.25,1);transform-origin:50% 0;
+}
+.unit:not(.person) .strap {display:none}
+.unit:not(.person) .joint {transform:none!important}
+.unit:not(.person) .mount {margin-top:0;perspective:none}
+.unit:not(.person) .mount::before,.unit:not(.person) .mount::after {display:none}
+.unit:not(.person) .joint > .ring {
+  position:absolute;left:50%;top:calc(var(--w)*-.085);margin:0;
+  width:calc(var(--w)*.045);height:calc(var(--w)*.16);padding:2px;
+  border-radius:45%;transform:translateX(-50%) rotate(-5deg);z-index:2;
+  box-shadow:inset 1px 0 #fff8;
+}
+.unit:not(.person) .badge-turn {transform:none!important}
+.unit:not(.person) .badge.reverse {visibility:hidden}
+.unit:not(.person) .badge-turn > .name {
+  bottom:4.5%;left:0;right:0;text-align:center;line-height:1.3;
+}
+.plaque-intro {
+  position:absolute;left:8%;top:14%;width:84%;height:67%;object-fit:cover;
+  mix-blend-mode:multiply;pointer-events:none;
+}
+@media(prefers-reduced-motion:reduce) {.unit:not(.person) .rig {transition:none}}
