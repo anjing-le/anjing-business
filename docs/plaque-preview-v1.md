@@ -94,3 +94,5 @@ Edit the input lettering layer: change ONLY the lettering STYLE to match the nat
 2026-11-28 联系气泡视觉：复用 anjing-site 的 IntroSpeechCloud 云朵轮廓和 Huninn 字体，调整尾巴朝向头像。字体按实际气泡文字生成 WOFF2 子集，OFL 授权随项目保留，避免远程字体和整包中文字体加载。复制微信与其他交互保持不变。
 
 2026-11-28 气泡修正：移到头像左侧，尾巴指向头像。确认 Huninn 字体缺少部分简体字符导致备用字体混排，改为覆盖全部气泡文案的 ZCOOL KuaiLe 子集 contact-hand-v2.woff2，保留原 OFL 授权。欢迎、成功与失败提示统一字体、字重和字形。
+
+2026-11-28 透明气泡：移除云朵填色与阴影，保留48%透明度的细轮廓，使背景水纹直接透出。出现时以420ms轻微舒展与渐显过渡，减少动态设置下不播放。文字、左侧位置和微信复制保持。

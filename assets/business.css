@@ -162,9 +162,15 @@
 .contact-bubble {
   position:absolute;z-index:12;width:min(310px,calc(84vw - 16px));padding:32px 36px 38px;
   border:0;border-radius:0;background:url("contact-cloud.svg") center/100% 100% no-repeat;
-  color:#554b43;filter:drop-shadow(0 3px 7px #51432e0a);
+  color:#554b43;filter:none;
+  transform-origin:96% 10%;animation:contact-cloud-appear .42s cubic-bezier(.22,.7,.3,1) both;
   font:400 17px/1.75 "Anjing Contact",sans-serif;font-synthesis:none;
   letter-spacing:.04em;text-align:center;user-select:text;cursor:inherit;
 }
 .contact-bubble[hidden] {display:none}
+@keyframes contact-cloud-appear {
+  from {opacity:0;transform:translate(5px,2px) scale(.96)}
+  to {opacity:1;transform:translate(0,0) scale(1)}
+}
+@media(prefers-reduced-motion:reduce) {.contact-bubble {animation:none}}
 @media(max-width:600px) {.contact-bubble {width:min(295px,calc(84vw - 16px));font-size:17px;padding:30px 34px 36px}}
