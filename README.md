@@ -49,3 +49,5 @@ Pages 已连接 GitHub，配置为推送 main 自动部署；首次已由 API �
 职业服务卡面 V2 改为整张生成图：居中标题、上下分割线、同色纸面及融合图示的精简描述；加入 LLM、AI Coding、Agent、RAG、MCP 与作品验证的培养语境。详见 [卡面生成记录](docs/career-artwork-v2.md)。
 
 项目合作入口已展示「项目咨询、方案交付」两张完整插画卡面。知识付费三张卡片在手机端以「上二下一」排列，支持同时看到整组；详见 [项目合作与手机展示记录](docs/project-cooperation-v1.md)。
+
+第三个业务入口现为「定制服务」，首张卡片为「定制化 WeChat Bot」，参考已有 WeChat Persona 桌面自动化方案展示群聊互动、本地记忆、群报话题与参与控制。素材和内容依据见 [卡片记录](docs/custom-wechat-bot-v1.md)。

@@ -45,3 +45,9 @@
   }
   .stage .product-hand .feature.show .face {transform:none}
 }
+
+@media(max-width:600px) {
+  .stage .product-hand[data-card-count="1"] .feature {
+    grid-column:1 / -1;width:100%;max-width:86vw;justify-self:center;
+  }
+}
