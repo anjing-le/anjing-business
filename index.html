@@ -292,6 +292,7 @@ body { margin:0; color:#282a25; background:#edeae2; font-family:"Helvetica Neue"
   <div class="unit english"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><button class="badge-toggle" aria-label="项目合作" aria-expanded="false"></button><div class="badge-turn"><div class="badge front"></div><div class="badge reverse"><div class="print product-print"></div></div><span class="name" aria-hidden="true">项目合作</span></div></div></div></div></div>
   <div class="unit cs"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><button class="badge-toggle" aria-label="定制服务" aria-expanded="false"></button><div class="badge-turn"><div class="badge front"></div><div class="badge reverse"><div class="print product-print"></div></div><span class="name" aria-hidden="true">定制服务</span></div></div></div></div></div>
   <div class="unit person"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><div class="badge-turn"><div class="badge front"><img class="portrait" src="assets/personal/wood-front-small.webp" width="384" height="384" decoding="async" fetchpriority="high" alt="" draggable="false"></div><div class="badge reverse" aria-hidden="true"><div class="print personal-print"></div></div></div><button class="badge-toggle" aria-label="安静" aria-expanded="false"></button></div></div></div></div>
+  <aside class="contact-bubble" id="contact-bubble" role="status" aria-live="polite" hidden></aside>
   <section class="hand product-hand" aria-label="商务介绍" hidden></section>
   <p class="mobile-card-hint" hidden>点开卡片，放大查看</p>
   <section class="hand personal-hand" aria-label="我们的介绍" hidden></section>
@@ -327,6 +328,7 @@ function cancelPreviewClose() {clearTimeout(previewCloseTimer)}
 function displayProduct(selection) {
   if(product===selection)return;
   product=selection;
+  if(selection!==3)contactBubble.hidden=true;
   showProductHand(product);
   layout();
 }
@@ -355,6 +357,7 @@ function layout(initial=false) {
     c.turn=selected?1:0;
     c.turnTarget=0;
   }
+  if(product===3&&!contactBubble.hidden)positionContactBubble();
 }
 function setOpen(card,open) {
   cancelPreviewClose();
@@ -362,7 +365,28 @@ function setOpen(card,open) {
   displayProduct(pinnedProduct);
   layout();
 }
-function activate(card) {setOpen(card,pinnedProduct!==card.index)}
+const contactWechat='daxingbomei';
+const contactBubble=document.querySelector('.contact-bubble');
+const contactWelcome='欢迎访问网站。点击头像复制微信，添加时请注明来意，我们聊聊你的需求。';
+function positionContactBubble() {
+  const r=cards[3].unit.getBoundingClientRect();
+  contactBubble.style.top=Math.max(12,r.top+cards[3].button.offsetHeight*.95+14)+'px';
+  contactBubble.style.setProperty('--tip-right',Math.max(18,r.width/2-4)+'px');
+}
+function showContactBubble(text=contactWelcome) {
+  contactBubble.textContent=text;contactBubble.hidden=false;positionContactBubble();
+}
+async function activate(card) {
+  if(card.index!==3) {setOpen(card,pinnedProduct!==card.index);return;}
+  setOpen(card,true);
+  if(!contactWechat) {showContactBubble('欢迎访问网站，一起聊聊你的需求。');return;}
+  try {
+    await navigator.clipboard.writeText(contactWechat);
+    showContactBubble('微信号已复制。添加时请注明来意，我们聊聊你的需求。');
+  } catch {
+    showContactBubble('微信号：'+contactWechat+'。请长按或选中复制，添加时注明来意。');
+  }
+}
 const artworkViewer=document.querySelector('.art-viewer');
 function viewArtwork(selection,index) {
   artworkViewer.querySelector('h2').textContent=features[selection][index][0];
@@ -568,6 +592,7 @@ for(const c of cards) {
   c.unit.addEventListener('pointerenter',event=>{
     if(event.pointerType==='touch')return;
     cancelPreviewClose();displayProduct(c.index);
+    if(c.index===3) {showContactBubble(contactWechat?contactWelcome:'欢迎访问网站，一起聊聊你的需求。');setTimeout(positionContactBubble,500);}
   });
   c.unit.addEventListener('pointerleave',event=>{
     if(event.pointerType!=='touch')schedulePreviewClose();
@@ -578,13 +603,15 @@ for(const c of cards) {
     if(event.key==='Escape') {setOpen(c,false);c.button.blur();layout();}
   });
 }
+contactBubble.addEventListener('pointerenter',cancelPreviewClose);
+contactBubble.addEventListener('pointerleave',event=>{if(event.pointerType!=='touch')schedulePreviewClose()});
 const productHand=document.querySelector('.product-hand');
 productHand.addEventListener('pointerenter',cancelPreviewClose);
 productHand.addEventListener('pointerleave',event=>{
   if(event.pointerType!=='touch')schedulePreviewClose();
 });
 document.addEventListener('click',event=>{
-  if(event.target.closest('.unit,.feature,dialog,a,button'))return;
+  if(event.target.closest('.unit,.feature,.contact-bubble,dialog,a,button'))return;
   cancelPreviewClose();
   pinnedProduct=null;
   if(document.activeElement?.closest('.unit'))document.activeElement.blur();

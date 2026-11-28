@@ -142,7 +142,7 @@
   .stage .profile-hand .profile-address {font-size:9px}
 }
 .profile-visit {display:block;margin:12px 16px 16px;padding:10px;text-align:center;color:#624d33;font:400 16px/1.5 "Kaiti SC","STKaiti",serif;background:#eee7da;border-radius:8px}
-.stage .feature.is-link {cursor:pointer}
+.stage .feature.is-link {cursor:url("cursors/richfree-pointer-20.png") 7 3,pointer}
 .stage .feature:not(.is-link) {cursor:inherit}
 .stage .feature.is-link .face {outline:1.5px solid transparent;outline-offset:4px;transition:outline-color .2s ease,transform .32s ease,box-shadow .32s ease}
 .stage .feature.is-link:is(.show,:hover,:focus-visible) .face {outline-color:#9c8150}
@@ -154,3 +154,13 @@
 }
 @media(max-width:600px),(pointer:coarse) {.card-link-hint {display:block}}
 @media(prefers-reduced-motion:reduce) {.stage .feature.is-link .face {transition:none}}
+
+.contact-bubble {
+  position:absolute;right:3vw;z-index:12;width:min(280px,85vw);padding:14px 17px;
+  border:1px solid #b6a18480;border-radius:14px 4px 14px 14px;
+  background:#faf6ed;color:#685540;box-shadow:0 5px 16px #51432e18;
+  font:400 16px/1.7 "Kaiti SC","STKaiti",serif;user-select:text;cursor:inherit;
+}
+.contact-bubble[hidden] {display:none}
+.contact-bubble::before {content:"";position:absolute;right:var(--tip-right,24px);top:-6px;width:10px;height:10px;background:#faf6ed;border-top:1px solid #b6a18480;border-left:1px solid #b6a18480;transform:rotate(45deg)}
+@media(max-width:600px) {.contact-bubble {right:4vw;width:min(260px,88vw);font-size:14px;padding:12px 15px}}
