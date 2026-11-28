@@ -1,5 +1,27 @@
 # 个人介绍手绘卡片 V1
 
+## V2 文案修订
+
+使用内置 imagegen 编辑，原图和其他两张卡保留。
+
+- 素材：`assets/profile/self-v2.webp`，源图：`assets/profile/source/self-v2.png`
+
+最终提示词：
+
+```text
+Edit this finished paper card with minimal localized changes. Change ONLY the bottom caption to the exact Chinese sentence: 深耕计算机，探索金融与音乐等领域，持续学习，不断分享。 Set it in two centered handwritten lines: line1 深耕计算机，探索金融与音乐等领域， line2 持续学习，不断分享。 Preserve the exact illustration, Anjing character, title 自我介绍, layout, divider rules, paper texture, palette and original landscape 5:4 dimensions. Match original natural dark brown handwriting. No other added words or changes.
+```
+
+- 素材：`assets/profile/team-v2.webp`，源图：`assets/profile/source/team-v2.png`
+
+最终提示词：
+
+```text
+Edit this finished paper card with minimal localized changes. Remove the LLM limitation: change bottom caption to exact Chinese sentence 汇集工程、算法、HR 与业务专家，协同解决实际问题。 in two centered handwritten lines, line1 汇集工程、算法、HR 与业务专家， line2 协同解决实际问题。 Replace only the central notebook heading LLM with the handwritten Chinese word 协作. Preserve everything else: title 团队介绍, four roles 工程 算法 HR 业务专家, people, pictures, layout, paper texture, colors, divider rules and landscape 5:4 dimensions. No other new words, no LLM text remaining anywhere.
+```
+
+
+
 使用内置 imagegen 生成，每张为完整卡面。沿用业务卡片的米白纸纹、居中手写标题、上下分割线与彩铅图示。原始 PNG 留存，线上使用压缩 WebP；页面负责阴影、圆角、动效与链接，不再额外叠加文字。
 
 手机端点击放大查看，存在网站入口的卡片在大图下提供访问链接。团队介绍没有独立入口，点击仅看大图。
