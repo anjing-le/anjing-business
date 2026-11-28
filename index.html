@@ -291,7 +291,7 @@ body { margin:0; color:#282a25; background:#edeae2; font-family:"Helvetica Neue"
   <div class="unit mac"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><button class="badge-toggle" aria-label="知识付费" aria-expanded="false"></button><div class="badge-turn"><div class="badge front"></div><div class="badge reverse"><div class="print product-print"></div></div><span class="name" aria-hidden="true">知识付费</span></div></div></div></div></div>
   <div class="unit english"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><button class="badge-toggle" aria-label="项目合作" aria-expanded="false"></button><div class="badge-turn"><div class="badge front"></div><div class="badge reverse"><div class="print product-print"></div></div><span class="name" aria-hidden="true">项目合作</span></div></div></div></div></div>
   <div class="unit cs"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><button class="badge-toggle" aria-label="定制服务" aria-expanded="false"></button><div class="badge-turn"><div class="badge front"></div><div class="badge reverse"><div class="print product-print"></div></div><span class="name" aria-hidden="true">定制服务</span></div></div></div></div></div>
-  <div class="unit person"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><div class="badge-turn"><div class="badge front"><img class="portrait" src="assets/personal/wood-front-small.webp" width="384" height="384" decoding="async" fetchpriority="high" alt="" draggable="false"></div><div class="badge reverse" aria-hidden="true"><div class="print personal-print"></div></div></div><button class="badge-toggle" aria-label="安静名片 · 我们的介绍" aria-expanded="false"></button></div></div></div></div>
+  <div class="unit person"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><div class="badge-turn"><div class="badge front"><img class="portrait" src="assets/personal/wood-front-small.webp" width="384" height="384" decoding="async" fetchpriority="high" alt="" draggable="false"></div><div class="badge reverse" aria-hidden="true"><div class="print personal-print"></div></div><span class="name" aria-hidden="true">安静</span></div><button class="badge-toggle" aria-label="安静" aria-expanded="false"></button></div></div></div></div>
   <section class="hand product-hand" aria-label="商务介绍" hidden></section>
   <p class="mobile-card-hint" hidden>点开卡片，放大查看</p>
   <section class="hand personal-hand" aria-label="我们的介绍" hidden></section>
@@ -321,245 +321,48 @@ for(const c of cards.filter(c=>c.index<3)) {
   c.button.setAttribute('aria-description',cover.copy);
   c.hovered=false;
 }
-// Sample a flat woven strip. The curve has zero slope at both attachments.
-const bandCount=16;
-for(const card of cards.filter(card=>card.index===3)) {
-  const strap=card.unit.querySelector('.strap');
-  card.bands=Array.from({length:bandCount},()=>strap.appendChild(document.createElement('i')));
-  card.flex=card.flexSpeed=0;
-}
-function drawRibbon(card,length,bend) {
-  if(card.drawnLength===length && card.drawnBend===bend) return;
-  card.drawnLength=length;
-  card.drawnBend=bend;
-  let x=0;
-  const step=length/bandCount;
-  card.bands.forEach((band,i)=>{
-    const t=(i+1)/bandCount;
-    const nextX=bend*16*t*t*(1-t)*(1-t);
-    const tilt=-Math.atan2(nextX-x,step);
-    band.style.height=(Math.hypot(nextX-x,step)+(i+1<bandCount?.55:0))+'px';
-    band.style.setProperty('--weave-y',-i*step+'px');
-    band.style.transform='translate('+x+'px,'+(i*step)+'px) rotate('+tilt+'rad) rotateY(var(--hardware-turn))';
-    x=nextX;
-  });
-}
-let product = null, pinnedProduct = null, personalOpen = false;
+let product = null, pinnedProduct = null;
 let previewCloseTimer;
 function cancelPreviewClose() {clearTimeout(previewCloseTimer)}
 function displayProduct(selection) {
   if(product===selection)return;
   product=selection;
   showProductHand(product);
-  stage.classList.toggle('both-open',personalOpen && product!==null);
   layout();
 }
 function schedulePreviewClose() {
   cancelPreviewClose();
   previewCloseTimer=setTimeout(()=>displayProduct(pinnedProduct),450);
 }
-let frame = 0, lastTime = 0, drag = null;
-function positions(card) {
-  const height = stage.clientHeight;
-  const hardware = card.joint.offsetHeight;
-  const spaceAboveHand=card.index<3 && stage.clientWidth>height ? .425 : .47;
-  const high = Math.max(8, Math.min(height * [.115,.10,.12,.032][card.index], height * spaceAboveHand - hardware));
-  const low = high + Math.min(32, height * .032);
-  const nameHeight = Math.max(28,card.button.offsetHeight*.21);
-  return { high, low, tucked:nameHeight-hardware };
-}
-function paint(card) {
-  const drop=Math.max(0,card.length);
-  card.rig.style.setProperty('--length',drop+'px');
-  // Aim at the ring's lower hinge so the ribbon and ring form one line
-  // while the clasp and badge remain free to swing around that hinge.
-  const jointAngle=card.angle*.64;
-  const hinge=rotatePoint(0,card.hingeY,jointAngle);
-  const dx=card.offsetX+hinge.x, dy=card.length+hinge.y-card.anchorY;
-  const direction=-Math.atan2(dx,dy);
-  const span=Math.hypot(dx,dy);
-  const length=Math.max(0,span-card.ringHeight+2);
-  const normalX=span?dy/span:0, normalY=span?-dx/span:0;
-  if(card.lastTip && !reduced.matches){
-    const sideways=(dx-card.lastTip.x)*normalX+(dy-card.lastTip.y)*normalY;
-    card.flex-=sideways*.38;
-  }
-  card.lastTip={x:dx,y:dy};
-  // A fully extended lanyard has less lateral give than a slack one.
-  const limit=Math.min(length*.13,32/(1+length/430));
-  card.flex=Math.max(-limit,Math.min(limit,card.flex));
-  drawRibbon(card,length,card.flex);
-  card.rig.style.setProperty('--ribbon-length',length+'px');
-  card.rig.style.setProperty('--pull-angle',direction+'rad');
-  card.joint.style.setProperty('--ring-angle',(direction-jointAngle*Math.PI/180)+'rad');
-  card.rig.style.transform='rotate('+card.angle*.36+'deg)';
-  card.joint.style.transform='translate('+card.offsetX+'px,'+Math.min(0,card.length)+'px) rotate('+card.angle*.64+'deg)';
-}
-// A hanging badge moves under gravity and tension along the strap. The
-// reel limits the restoring force on a long pull; sideways motion can swing.
-function stepSwing(c,dt) {
-  const y=c.length-c.anchorY;
-  const radius=Math.max(1,Math.hypot(c.offsetX,y));
-  const nx=c.offsetX/radius, ny=y/radius;
-  const radialSpeed=c.speedX*nx+c.velocity*ny;
-  const gravity=1600;
-  const extension=radius-(c.target-c.anchorY);
-  const tension=Math.max(0,gravity+5200*Math.tanh(extension/95)+9*radialSpeed);
-  const ax=-tension*nx-2.8*c.speedX;
-  c.speedX+=ax*dt;
-  c.velocity+=(gravity-tension*ny-2.8*c.velocity)*dt;
-  c.offsetX+=c.speedX*dt;
-  c.length+=c.velocity*dt;
-  // Inertia tips the hanging body as its attachment accelerates.
-  c.spin+=((c.restAngle-c.angle)*52-5.8*c.spin+Math.max(-480,Math.min(480,ax*.10)))*dt;
-  c.angle+=c.spin*dt;
-}
-function placeGrip(c,g) {
-  const grip=rotatePoint(g.grip.x,g.grip.y,c.angle);
-  const pivot=rotatePoint(g.pointer.x-grip.x,g.pointer.y-grip.y,-c.angle*.36);
-  c.offsetX=pivot.x;
-  c.length=pivot.y;
-}
-function swingInHand(c,g,dt) {
-  if(!g.moved || reduced.matches || dt<=0) return false;
-  const vx=(g.pointer.x-g.previous.x)/dt, vy=(g.pointer.y-g.previous.y)/dt;
-  g.previous=g.pointer;
-  const blend=1-Math.exp(-dt*16);
-  const dvx=(vx-g.vx)*blend, dvy=(vy-g.vy)*blend;
-  g.vx+=dvx; g.vy+=dvy;
-  // Moving the grip above or beside the mass applies a turning impulse.
-  const inertia=g.radius*g.radius+g.armX*g.armX+g.armY*g.armY;
-  c.spin+=(g.armY*dvx-g.armX*dvy)/inertia*180/Math.PI;
-  const equilibrium=c.restAngle+Math.max(-12,Math.min(12,g.armX/g.radius*28));
-  c.spin+=((equilibrium-c.angle)*42-8*c.spin)*dt;
-  c.spin=Math.max(-145,Math.min(145,c.spin));
-  c.angle=Math.max(-34,Math.min(34,c.angle+c.spin*dt));
-  placeGrip(c,g);
-  return Math.abs(c.spin)+Math.abs(c.angle-equilibrium)+Math.abs(g.vx)+Math.abs(g.vy)>.08;
-}
-function releaseMomentum(c,gesture,time) {
-  const samples=gesture.samples;
-  const last=samples[samples.length-1];
-  const first=samples.find(s=>s.t>=time-100);
-  if(!first || time-last.t>=100 || first===last) return;
-  const dt=Math.max(12,time-first.t)/1000;
-  const vx=(last.x-first.x)/dt, vy=(last.y-first.y)/dt;
-  const scale=Math.min(1,1500/Math.max(1,Math.hypot(vx,vy)));
-  c.speedX=vx*scale;
-  c.velocity=vy*scale;
-  c.spin=Math.max(-110,Math.min(110,(last.angle-first.angle)/dt));
-}
 const turnDurationMs=480;
-function advanceTurn(card,dt) {
-  const remaining=card.turnTarget-card.turn;
-  if(!remaining) return false;
-  const step=reduced.matches?1:dt*1000/turnDurationMs;
-  card.turn+=Math.sign(remaining)*Math.min(step,Math.abs(remaining));
-  const t=card.turn;
-  card.rig.style.setProperty('--hardware-turn',(180*t*t*(3-2*t))+'deg');
-  return card.turn!==card.turnTarget;
-}
-function animate(time) {
-  const elapsed=Math.max(0,(time-lastTime)/1000); lastTime=time;
-  const dt=Math.min(elapsed,.05);
-  let active=false;
-  for (const c of cards) {
-    if(c.index<3)continue;
-    if(advanceTurn(c,elapsed)) active=true;
-    if(reduced.matches) c.flex=c.flexSpeed=0;
-    else {
-      c.flexSpeed+=(-185*c.flex-19*c.flexSpeed)*dt;
-      c.flex+=c.flexSpeed*dt;
-    }
-    if(Math.abs(c.flex)+Math.abs(c.flexSpeed)>.06) active=true;
-    else c.flex=c.flexSpeed=0;
-    if (drag?.card===c) {if(swingInHand(c,drag,dt)) active=true;paint(c);continue;}
-    if (reduced.matches) { c.length=c.target; c.angle=c.restAngle; c.offsetX=c.speedX=c.velocity=c.spin=0; }
-    else if(c.swinging && c.target>c.anchorY+4){
-      // Substep for consistent tension and damping across refresh rates.
-      const steps=Math.max(1,Math.ceil(dt*120));
-      for(let i=0;i<steps;i++) stepSwing(c,dt/steps);
-    } else {
-      c.speedX += (-c.offsetX*118-c.speedX*15)*dt;
-      c.offsetX += c.speedX*dt;
-      c.velocity += ((c.target-c.length)*118-c.velocity*15)*dt;
-      c.length += c.velocity*dt;
-      c.spin += ((c.restAngle-c.angle)*48-c.spin*5)*dt;
-      c.angle += c.spin*dt;
-    }
-    if (Math.abs(c.offsetX)+Math.abs(c.speedX)+Math.abs(c.target-c.length)+Math.abs(c.velocity)+Math.abs(c.restAngle-c.angle)+Math.abs(c.spin)>.055) active=true;
-    else { c.length=c.target; c.angle=c.restAngle; c.offsetX=c.speedX=c.spin=c.velocity=0; c.swinging=false; c.unit.classList.remove('pulled'); }
-    paint(c);
-  }
-  frame=active?requestAnimationFrame(animate):0;
-}
-function wake() { if(!frame) {lastTime=performance.now();frame=requestAnimationFrame(animate)} }
 function layout(initial=false) {
-  for (const c of cards) {
-    if(c.index<3) {
-      const height=c.button.offsetHeight;
-      const peek=Math.max(44,Math.min(72,height*.2));
-      const drop=-height*.05;
-      const selected=product===c.index;
-      const preview=document.activeElement===c.button&&c.button.matches(':focus-visible');
-      const down=selected||preview;
-      c.unit.style.setProperty('--board-height',height+'px');
-      c.unit.style.setProperty('--peek-height',peek+'px');
-      c.unit.style.setProperty('--drop-y',drop+'px');
-      c.unit.classList.toggle('is-down',down);
-      c.unit.classList.toggle('selected',selected);
-      c.unit.classList.remove('turned');
-      c.button.setAttribute('aria-expanded',String(selected));
-      if(initial) {c.rig.style.transition='none';requestAnimationFrame(()=>c.rig.style.removeProperty('transition'));}
-      c.rig.style.transform='translateY('+(down?drop:peek-height)+'px)';
-      c.rig.style.setProperty('--hardware-turn','0deg');
-      c.turn=selected?1:0;
-      c.turnTarget=0;
-      continue;
-    }
-    const {high,low,tucked}=positions(c);
-    const personal=c.unit.classList.contains('person');
-    const down=personal?personalOpen:product===c.index;
-    const tuckedAway=!personal && !down && (personalOpen || product!==null);
-    const target=down?low:tuckedAway?tucked:high;
-    if (!initial && !c.swinging && Math.abs(c.target-target)>1) c.spin += [17,-20,15,-13][c.index];
-    c.target=target;
-    c.button.setAttribute('aria-expanded',String(down));
-    c.turnTarget=down?1:0;
-    c.unit.classList.toggle('turned',down);
-    const platforms=c.unit.querySelector('.platforms');
-    if(platforms) platforms.inert=!down;
-    const ring=c.joint.querySelector('.ring');
-    const ringStyle=getComputedStyle(ring);
-    c.ringHeight=parseFloat(ringStyle.height);
-    c.hingeY=c.ringHeight+parseFloat(ringStyle.marginTop);
-    c.anchorY=-Math.max(24,ring.offsetWidth);
-    c.rig.style.setProperty('--anchor-y',c.anchorY+'px');
-    if(initial) { c.length=target;c.angle=c.restAngle;paint(c); }
+  for(const c of cards) {
+    const height=c.button.offsetHeight;
+    const peek=c.index===3?Math.max(18,height*.24):Math.max(44,Math.min(72,height*.2));
+    const drop=-height*.05;
+    const selected=product===c.index;
+    const down=selected||(document.activeElement===c.button&&c.button.matches(':focus-visible'));
+    c.unit.style.setProperty('--board-height',height+'px');
+    c.unit.style.setProperty('--peek-height',peek+'px');
+    c.unit.style.setProperty('--drop-y',drop+'px');
+    c.unit.classList.toggle('is-down',down);
+    c.unit.classList.toggle('selected',selected);
+    c.unit.classList.remove('turned');
+    c.button.setAttribute('aria-expanded',String(selected));
+    if(initial) {c.rig.style.transition='none';requestAnimationFrame(()=>c.rig.style.removeProperty('transition'));}
+    c.rig.style.transform='translateY('+(down?drop:peek-height)+'px)';
+    c.rig.style.setProperty('--hardware-turn','0deg');
+    c.turn=selected?1:0;
+    c.turnTarget=0;
   }
-  wake();
 }
-function setOpen(card, open) {
+function setOpen(card,open) {
   cancelPreviewClose();
-  if(card.unit.classList.contains('person')) {
-    personalOpen=open;
-    if(open && product!==null) {
-      product=null;
-      pinnedProduct=null;
-      showProductHand(null);
-    }
-    showPersonalHand(open?card.index:null);
-  } else {
-    pinnedProduct=open?card.index:null;
-    product=pinnedProduct;
-    showProductHand(product);
-  }
-  stage.classList.toggle('both-open',personalOpen && product!==null);
+  pinnedProduct=open?card.index:null;
+  displayProduct(pinnedProduct);
   layout();
 }
-function activate(card) {
-  setOpen(card,card.index<3?pinnedProduct!==card.index:card.button.getAttribute('aria-expanded')!=='true');
-}
+function activate(card) {setOpen(card,pinnedProduct!==card.index)}
 const artworkViewer=document.querySelector('.art-viewer');
 function viewArtwork(selection,index) {
   artworkViewer.querySelector('h2').textContent=features[selection][index][0];
@@ -584,7 +387,13 @@ const features = [
   [['求职规划','#665647','#eee8dc'],['定制成长','#665647','#eee8dc'],['全程陪跑','#665647','#eee8dc']],
   [['项目咨询','#665647','#eee8dc'],['方案交付','#665647','#eee8dc']],
   [['定制化 WeChat Bot','#665647','#eee8dc']],
-  [['我们的介绍','#776b5e','#e1cfbd']]
+  [['个人主页','#776b5e','#e1cfbd'],['GitHub','#776b5e','#e1cfbd'],['开源作品','#776b5e','#e1cfbd'],['Happy Journey','#776b5e','#e1cfbd']]
+];
+const profileEntries = [
+  {url:'https://anjing.cc/',label:'anjing.cc'},
+  {url:'https://github.com/anjing-le',label:'github.com/anjing-le'},
+  {url:'https://product.anjing.cc/',label:'product.anjing.cc'},
+  {url:'https://happy-journey.anjing.cc/',label:'happy-journey.anjing.cc'}
 ];
 const careerServices = [
   {title:'求职规划', image:'assets/career/understand-v3.webp', alt:'求职规划：梳理个人条件与诉求，分析方向与能力差距。看清方向与差距，形成适合你的行动路线。'},
@@ -684,6 +493,7 @@ function handRenderer(hand) {
     hand.hidden=false;
     hand.classList.toggle('macos-hand',selection===0);
     hand.classList.toggle('career-hand',selection!==3);
+    hand.classList.toggle('profile-hand',selection===3);
     hand.classList.toggle('custom-hand',selection===2);
     hand.classList.toggle('project-hand',selection===1);
     hand.classList.toggle('cs-hand',selection===2);
@@ -694,8 +504,9 @@ function handRenderer(hand) {
     hand.dataset.cardCount=pack.length;
     hand.setAttribute('aria-label',cards[selection].button.getAttribute('aria-label')+' 内容牌');
     pack.forEach(([label,color,tint],i)=>{
-      const button=document.createElement('button');
-      button.type='button';
+      const button=document.createElement(selection===3?'a':'button');
+      if(selection===3) {button.href=profileEntries[i].url;button.target='_blank';button.rel='noopener noreferrer';}
+      else button.type='button';
       button.className='feature';
       button.setAttribute('aria-label',label);
       const offset=i-(pack.length-1)/2;
@@ -723,7 +534,7 @@ function handRenderer(hand) {
         topic.textContent=label;
         const summary=document.createElement('span');
         summary.className='profile-summary';
-        summary.textContent='介绍内容整理中';
+        summary.textContent=profileEntries[i].label;
         face.append(topic,summary);
       } else {
         const caption=document.createElement('span');
@@ -739,7 +550,7 @@ function handRenderer(hand) {
       button.onblur=()=>highlight(null);
       button.onclick=()=>{
         highlight(button);
-        if(selection===3||matchMedia('(max-width:600px)').matches)viewArtwork(selection,i);
+        if(selection!==3&&matchMedia('(max-width:600px)').matches)viewArtwork(selection,i);
       };
       hand.append(button);
     });
@@ -748,77 +559,20 @@ function handRenderer(hand) {
   };
 }
 const showProductHand=handRenderer(document.querySelector(".product-hand"));
-const showPersonalHand=handRenderer(document.querySelector(".personal-hand"));
-function rotatePoint(x,y,degrees) {
-  const a=degrees*Math.PI/180;
-  return {x:x*Math.cos(a)-y*Math.sin(a),y:x*Math.sin(a)+y*Math.cos(a)};
-}
 for(const c of cards) {
-  const mount=c.button.closest('.mount');
   c.button.onclick=()=>activate(c);
-  if(c.index<3) {
-    c.unit.addEventListener('pointerenter',event=>{
-      if(event.pointerType==='touch')return;
-      cancelPreviewClose();
-      displayProduct(c.index);
-    });
-    c.unit.addEventListener('pointerleave',event=>{
-      if(event.pointerType==='touch')return;
-      schedulePreviewClose();
-    });
-    c.button.addEventListener('focus',()=>layout());
-    c.button.addEventListener('blur',()=>layout());
-    c.button.addEventListener('keydown',event=>{
-      if(event.key==='Escape') {setOpen(c,false);c.hovered=false;c.button.blur();layout();}
-    });
-    continue;
-  }
-  mount.onpointerdown=e=>{
-    if(!e.isPrimary||e.button!==0||drag||e.target!==c.button) return;
-    c.unit.classList.add('pulled');
-    const bounds=c.unit.getBoundingClientRect();
-    const anchorX=bounds.left+bounds.width/2, anchorY=bounds.top+bounds.height/2;
-    const breeze=parseFloat(getComputedStyle(c.unit).rotate)||0;
-    const pointer=rotatePoint(e.clientX-anchorX,e.clientY-anchorY,-breeze);
-    const pivot=rotatePoint(c.offsetX,c.length,c.angle*.36);
-    const grip=rotatePoint(pointer.x-pivot.x,pointer.y-pivot.y,-c.angle);
-    c.swinging=false;
-    const samples=[{t:e.timeStamp,x:c.offsetX,y:c.length,angle:c.angle}];
-    c.speedX=c.velocity=c.spin=0;
-    const radius=Math.max(20,c.button.offsetHeight*.45);
-    const armX=-grip.x, armY=c.joint.offsetHeight-c.button.offsetHeight*.5-grip.y;
-    drag={pointer,previous:pointer,vx:0,vy:0,armX,armY,radius,samples,id:e.pointerId,card:c,x:e.clientX,y:e.clientY,anchorX,anchorY,breeze,grip,moved:false};
-    e.target.setPointerCapture(e.pointerId);
-  };
-  mount.onpointermove=e=>{
-    if(drag?.id!==e.pointerId||drag.card!==c) return;
-    const dy=e.clientY-drag.y, dx=e.clientX-drag.x;
-    if(!drag.moved && Math.hypot(dx,dy)<6) return;
-    drag.moved=true;
-    drag.pointer=rotatePoint(e.clientX-drag.anchorX,e.clientY-drag.anchorY,-drag.breeze);
-    placeGrip(c,drag);
-    drag.samples.push({t:e.timeStamp,x:c.offsetX,y:c.length,angle:c.angle});
-    while(drag.samples.length>2 && drag.samples[1].t<e.timeStamp-100) drag.samples.shift();
-    paint(c);
-    wake();
-  };
-  function release(e) {
-    if(drag?.id!==e.pointerId||drag.card!==c) return;
-    const moved=drag.moved, distance=e.clientY-drag.y;
-    if(moved && !reduced.matches){
-      c.swinging=true;
-      if(e.type==='pointerup') releaseMomentum(c,drag,e.timeStamp);
-    }
-    drag=null;
-    if(moved && e.type==='pointerup') {
-      mount.addEventListener('click',ev=>{ev.stopImmediatePropagation();ev.preventDefault()},{once:true,capture:true,signal:AbortSignal.timeout(450)});
-      if(distance>18) activate(c);
-      else if(distance< -18 && c.button.getAttribute('aria-expanded')==='true') setOpen(c,false);
-    }
-    wake();
-  }
-  mount.onpointerup=release;
-  mount.onpointercancel=release;
+  c.unit.addEventListener('pointerenter',event=>{
+    if(event.pointerType==='touch')return;
+    cancelPreviewClose();displayProduct(c.index);
+  });
+  c.unit.addEventListener('pointerleave',event=>{
+    if(event.pointerType!=='touch')schedulePreviewClose();
+  });
+  c.button.addEventListener('focus',()=>layout());
+  c.button.addEventListener('blur',()=>layout());
+  c.button.addEventListener('keydown',event=>{
+    if(event.key==='Escape') {setOpen(c,false);c.button.blur();layout();}
+  });
 }
 const productHand=document.querySelector('.product-hand');
 productHand.addEventListener('pointerenter',cancelPreviewClose);
@@ -829,7 +583,7 @@ document.addEventListener('click',event=>{
   if(event.target.closest('.unit,.feature,dialog,a,button'))return;
   cancelPreviewClose();
   pinnedProduct=null;
-  if(document.activeElement?.closest('.unit:not(.person)'))document.activeElement.blur();
+  if(document.activeElement?.closest('.unit'))document.activeElement.blur();
   displayProduct(null);
   layout();
 });

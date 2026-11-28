@@ -56,3 +56,7 @@ Edit the input lettering layer: change ONLY the lettering STYLE to match the nat
 2026-11-28 环扣修订：去掉直金属杆拼接，改用轻量 SVG 绘制短木色织带折返扣住金属环的结构；环前后分层、接触遮挡和金属明暗独立绘制。页面交互与内容卡片尺寸保持不变。
 
 2026-11-28 最终取舍：主木牌展开时顶部保留 5% 在视口外，露出约 95%；隐藏环扣、挂带与穿孔效果，不再展示悬挂五金。原悬停联动、点击固定与点击空白收回保留。
+
+## 安静个人名牌与入口
+
+2026-11-28：安静个人名牌统一为顶部收起、下拉露出约95%、悬停联动、点击固定和点击空白收回。保留人物木牌素材，隐藏挂带与金属环。下方先设置四个入口：个人主页 https://anjing.cc/；GitHub https://github.com/anjing-le；开源作品暂接现有作品站 https://product.anjing.cc/；Happy Journey https://happy-journey.anjing.cc/。本轮只确定名称与网址，具体介绍与卡片内容待共同设计。手机端四张入口为两行两列。
