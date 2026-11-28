@@ -370,8 +370,10 @@ const contactBubble=document.querySelector('.contact-bubble');
 const contactWelcome='欢迎访问网站。点击头像复制微信，添加时请注明来意，我们聊聊你的需求。';
 function positionContactBubble() {
   const r=cards[3].unit.getBoundingClientRect();
-  contactBubble.style.top=Math.max(12,r.top+cards[3].button.offsetHeight*.95+14)+'px';
-  contactBubble.style.setProperty('--tip-right',Math.max(18,r.width/2-4)+'px');
+  const stageRect=stage.getBoundingClientRect();
+  const avatarHeight=cards[3].button.offsetHeight*.95;
+  contactBubble.style.left=Math.max(8,r.left-stageRect.left-contactBubble.offsetWidth-6)+'px';
+  contactBubble.style.top=Math.max(8,r.top-stageRect.top+avatarHeight*.5-contactBubble.offsetHeight*.1)+'px';
 }
 function showContactBubble(text=contactWelcome) {
   contactBubble.textContent=text;contactBubble.hidden=false;positionContactBubble();
