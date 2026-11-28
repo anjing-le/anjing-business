@@ -344,7 +344,20 @@ function drawRibbon(card,length,bend) {
     x=nextX;
   });
 }
-let product = null, personalOpen = false;
+let product = null, pinnedProduct = null, personalOpen = false;
+let previewCloseTimer;
+function cancelPreviewClose() {clearTimeout(previewCloseTimer)}
+function displayProduct(selection) {
+  if(product===selection)return;
+  product=selection;
+  showProductHand(product);
+  stage.classList.toggle('both-open',personalOpen && product!==null);
+  layout();
+}
+function schedulePreviewClose() {
+  cancelPreviewClose();
+  previewCloseTimer=setTimeout(()=>displayProduct(pinnedProduct),450);
+}
 let frame = 0, lastTime = 0, drag = null;
 function positions(card) {
   const height = stage.clientHeight;
@@ -489,7 +502,7 @@ function layout(initial=false) {
       const peek=Math.max(44,Math.min(72,height*.2));
       const drop=Math.max(16,width*.11);
       const selected=product===c.index;
-      const preview=c.hovered||(document.activeElement===c.button&&c.button.matches(':focus-visible'));
+      const preview=document.activeElement===c.button&&c.button.matches(':focus-visible');
       const down=selected||preview;
       c.unit.style.setProperty('--board-height',height+'px');
       c.unit.style.setProperty('--peek-height',peek+'px');
@@ -528,22 +541,25 @@ function layout(initial=false) {
   wake();
 }
 function setOpen(card, open) {
+  cancelPreviewClose();
   if(card.unit.classList.contains('person')) {
     personalOpen=open;
     if(open && product!==null) {
       product=null;
+      pinnedProduct=null;
       showProductHand(null);
     }
     showPersonalHand(open?card.index:null);
   } else {
-    product=open?card.index:null;
+    pinnedProduct=open?card.index:null;
+    product=pinnedProduct;
     showProductHand(product);
   }
   stage.classList.toggle('both-open',personalOpen && product!==null);
   layout();
 }
 function activate(card) {
-  setOpen(card,card.button.getAttribute('aria-expanded')!=='true');
+  setOpen(card,card.index<3?pinnedProduct!==card.index:card.button.getAttribute('aria-expanded')!=='true');
 }
 const artworkViewer=document.querySelector('.art-viewer');
 function viewArtwork(selection,index) {
@@ -744,11 +760,12 @@ for(const c of cards) {
   if(c.index<3) {
     c.unit.addEventListener('pointerenter',event=>{
       if(event.pointerType==='touch')return;
-      c.hovered=true;layout();
+      cancelPreviewClose();
+      displayProduct(c.index);
     });
     c.unit.addEventListener('pointerleave',event=>{
       if(event.pointerType==='touch')return;
-      c.hovered=false;layout();
+      schedulePreviewClose();
     });
     c.button.addEventListener('focus',()=>layout());
     c.button.addEventListener('blur',()=>layout());
@@ -804,6 +821,19 @@ for(const c of cards) {
   mount.onpointerup=release;
   mount.onpointercancel=release;
 }
+const productHand=document.querySelector('.product-hand');
+productHand.addEventListener('pointerenter',cancelPreviewClose);
+productHand.addEventListener('pointerleave',event=>{
+  if(event.pointerType!=='touch')schedulePreviewClose();
+});
+document.addEventListener('click',event=>{
+  if(event.target.closest('.unit,.feature,dialog,a,button'))return;
+  cancelPreviewClose();
+  pinnedProduct=null;
+  if(document.activeElement?.closest('.unit:not(.person)'))document.activeElement.blur();
+  displayProduct(null);
+  layout();
+});
 layout(true);
 new ResizeObserver(()=>layout()).observe(stage);
 </script>
