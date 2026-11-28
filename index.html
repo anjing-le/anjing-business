@@ -339,7 +339,7 @@ function layout(initial=false) {
   for(const c of cards) {
     const height=c.button.offsetHeight;
     const peek=c.index===3?Math.max(18,height*.24):Math.max(44,Math.min(72,height*.2));
-    const drop=-height*.05;
+    const drop=-height*(c.index===3?.05:.20);
     const selected=product===c.index;
     const down=selected||(document.activeElement===c.button&&c.button.matches(':focus-visible'));
     c.unit.style.setProperty('--board-height',height+'px');
