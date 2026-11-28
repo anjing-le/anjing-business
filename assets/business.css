@@ -94,12 +94,10 @@
 .unit:not(.person) .mount {margin-top:0;perspective:none}
 .unit:not(.person) .mount::before,.unit:not(.person) .mount::after {display:none}
 .unit:not(.person) .joint > .ring {
-  position:absolute;left:50%;top:calc(0px - var(--drop-y));margin:0;
-  width:calc(var(--w)*.14);height:calc(var(--drop-y) + var(--w)*.075);padding:0;
-  border-radius:0;transform:translateX(-50%);z-index:2;
-  background:url("plaque-hanger.svg") center/100% 100% no-repeat;
-  mask:none;box-shadow:none;filter:drop-shadow(1px 1px 1px #3c38202b);
+  display:none;
 }
+.unit:not(.person) .badge {mask:none;-webkit-mask:none}
+.unit:not(.person) .badge::after {display:none}
 .unit:not(.person) .badge.front::before {
   content:"";display:block;position:absolute;left:8%;right:8%;top:79%;
   height:clamp(2px,calc(var(--w)*.009),3.5px);border-radius:50%;
