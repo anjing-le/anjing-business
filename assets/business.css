@@ -155,12 +155,16 @@
 @media(max-width:600px),(pointer:coarse) {.card-link-hint {display:block}}
 @media(prefers-reduced-motion:reduce) {.stage .feature.is-link .face {transition:none}}
 
+@font-face {
+  font-family:"Anjing Contact";src:url("fonts/contact-huninn-v1.woff2") format("woff2");
+  font-weight:400;font-style:normal;font-display:swap;
+}
 .contact-bubble {
-  position:absolute;right:3vw;z-index:12;width:min(280px,85vw);padding:14px 17px;
-  border:1px solid #b6a18480;border-radius:14px 4px 14px 14px;
-  background:#faf6ed;color:#685540;box-shadow:0 5px 16px #51432e18;
-  font:400 16px/1.7 "Kaiti SC","STKaiti",serif;user-select:text;cursor:inherit;
+  position:absolute;right:3vw;z-index:12;width:min(310px,90vw);padding:32px 36px 38px;
+  border:0;border-radius:0;background:url("contact-cloud.svg") center/100% 100% no-repeat;
+  color:#554b43;filter:drop-shadow(0 3px 7px #51432e0a);
+  font:400 17px/1.75 "Anjing Contact","Kaiti SC",sans-serif;
+  letter-spacing:.04em;text-align:center;user-select:text;cursor:inherit;
 }
 .contact-bubble[hidden] {display:none}
-.contact-bubble::before {content:"";position:absolute;right:var(--tip-right,24px);top:-6px;width:10px;height:10px;background:#faf6ed;border-top:1px solid #b6a18480;border-left:1px solid #b6a18480;transform:rotate(45deg)}
-@media(max-width:600px) {.contact-bubble {right:4vw;width:min(260px,88vw);font-size:14px;padding:12px 15px}}
+@media(max-width:600px) {.contact-bubble {right:3vw;width:min(295px,90vw);font-size:16px;padding:30px 34px 36px}}
