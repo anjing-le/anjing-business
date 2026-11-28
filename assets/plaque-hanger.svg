@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 150" fill="none">
+  <defs>
+    <linearGradient id="fabric" x1="30" y1="0" x2="50" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#76654e"/><stop offset=".18" stop-color="#baa688"/><stop offset=".55" stop-color="#c7b598"/><stop offset=".88" stop-color="#a28b6c"/><stop offset="1" stop-color="#75634b"/>
+    </linearGradient>
+    <linearGradient id="steel" x1="20" y1="65" x2="61" y2="118" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#777e73"/><stop offset=".2" stop-color="#f4f1df"/><stop offset=".42" stop-color="#b5b9a8"/><stop offset=".67" stop-color="#666e62"/><stop offset=".84" stop-color="#dee0cf"/><stop offset="1" stop-color="#92998a"/>
+    </linearGradient>
+    <pattern id="weave" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 1H4M1 0V4" stroke="#66533c" stroke-opacity=".17" stroke-width=".6"/></pattern>
+  </defs>
+  <!-- The rear half passes behind the folded strap; the front half enters the board eyelet. -->
+  <path d="M42 55C56 57 61 86 59 108C57 130 50 142 42 144" stroke="#4b5046" stroke-opacity=".18" stroke-width="6" transform="translate(1 1)"/>
+  <path d="M42 55C56 57 61 86 59 108C57 130 50 142 42 144" stroke="url(#steel)" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M31-3H49V57C49 64 45 69 40 69C34 69 31 64 31 57Z" fill="url(#fabric)" stroke="#79664e" stroke-width=".7"/>
+  <path d="M31-3H49V57C49 64 45 69 40 69C34 69 31 64 31 57Z" fill="url(#weave)"/>
+  <path d="M34 53V57C34 63 36 66 40 66C44 66 46 62 46 57V53" stroke="#e0cfaf" stroke-opacity=".65" stroke-width="1"/>
+  <path d="M42 55C28 53 22 74 23 98C24 122 32 145 42 144" stroke="#747b6e" stroke-width="5" stroke-linecap="round"/>
+  <path d="M42 55C28 53 22 74 23 98C24 122 32 145 42 144" stroke="url(#steel)" stroke-width="3.8" stroke-linecap="round"/>
+  <path d="M36 58C27 64 25 80 26 98C27 117 32 132 37 138" stroke="#fffdee" stroke-opacity=".65" stroke-width="1" stroke-linecap="round"/>
+</svg>
