@@ -286,8 +286,8 @@ body { margin:0; color:#282a25; background:#edeae2; font-family:"Helvetica Neue"
 <link rel="stylesheet" href="assets/mobile.css">
 <link rel="stylesheet" href="assets/business.css?v=natural-woven-13">
 </head><body>
+<canvas class="water" aria-hidden="true"></canvas>
 <main class="stage" aria-label="商务合作">
-  <canvas class="water" aria-hidden="true"></canvas>
   <div class="unit mac"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><button class="badge-toggle" aria-label="知识付费" aria-expanded="false"></button><div class="badge-turn"><div class="badge front"></div><div class="badge reverse"><div class="print product-print"></div></div><span class="name" aria-hidden="true">知识付费</span></div></div></div></div></div>
   <div class="unit english"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><button class="badge-toggle" aria-label="项目合作" aria-expanded="false"></button><div class="badge-turn"><div class="badge front"></div><div class="badge reverse"><div class="print product-print"></div></div><span class="name" aria-hidden="true">项目合作</span></div></div></div></div></div>
   <div class="unit cs"><div class="rig"><div class="strap"></div><div class="joint"><div class="ring"></div><div class="mount"><button class="badge-toggle" aria-label="定制服务" aria-expanded="false"></button><div class="badge-turn"><div class="badge front"></div><div class="badge reverse"><div class="print product-print"></div></div><span class="name" aria-hidden="true">定制服务</span></div></div></div></div></div>
@@ -297,18 +297,8 @@ body { margin:0; color:#282a25; background:#edeae2; font-family:"Helvetica Neue"
   <p class="mobile-card-hint" hidden>点开卡片，放大查看</p>
   <section class="hand personal-hand" aria-label="我们的介绍" hidden></section>
 </main>
-<section class="service-details" id="service-details" aria-labelledby="detail-title" tabindex="-1" hidden>
-  <div class="detail-toolbar"><button type="button" class="detail-back">↑ 返回选服务</button><span class="detail-trail"></span></div>
-  <article class="detail-paper">
-    <header class="detail-heading"><p class="detail-eyebrow">安静 · 服务手札</p><h1 id="detail-title"></h1><p class="detail-intro">详细介绍正在整理。先留一页，慢慢把事情讲清楚。</p></header>
-    <div class="detail-chapters">
-      <section><span class="chapter-number" aria-hidden="true">01</span><h2>适合什么情况</h2><div class="pencil-lines" aria-hidden="true"></div></section>
-      <section><span class="chapter-number" aria-hidden="true">02</span><h2>具体怎么做</h2><div class="pencil-lines" aria-hidden="true"></div></section>
-      <section><span class="chapter-number" aria-hidden="true">03</span><h2>你会拿到什么</h2><div class="pencil-lines" aria-hidden="true"></div></section>
-      <section><span class="chapter-number" aria-hidden="true">04</span><h2>一起看个例子</h2><div class="pencil-lines" aria-hidden="true"></div></section>
-    </div>
-    <footer class="detail-contact"><p>带着你的问题，来聊聊。</p><span>说说你的现状、目标和期望时间。</span><button type="button" class="detail-copy">复制微信，聊聊需求</button><small class="detail-copy-status" role="status" aria-live="polite">微信 daxingbomei · 添加时请注明来意</small></footer>
-  </article>
+<section class="service-details" id="service-details" aria-label="服务详情" tabindex="-1" hidden>
+  <button type="button" class="detail-back">↑ 返回选服务</button>
 </section>
 <dialog class="art-viewer" aria-labelledby="artwork-title">
   <div class="viewer-bar"><h2 id="artwork-title">商务合作</h2><button type="button" aria-label="关闭详情">×</button></div>
@@ -613,9 +603,8 @@ function openServiceDetail(selection,index,origin) {
   detailOrigin=origin;
   document.querySelectorAll('.feature[aria-controls="service-details"]').forEach(e=>e.setAttribute('aria-expanded',String(e===origin)));
   const title=features[selection][index][0];
-  document.querySelector('#detail-title').textContent=title;
-  document.querySelector('.detail-trail').textContent=(selection===3?'安静':cards[selection].button.getAttribute('aria-label'))+' · '+title;
-  document.querySelector('.detail-copy-status').textContent='微信 '+contactWechat+' · 添加时请注明来意';
+  detailSection.setAttribute('aria-label',title+'详情');
+  detailSection.dataset.service=selection+'-'+index;
   detailSection.hidden=false;
   detailSection.focus({preventScroll:true});
   detailSection.scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'start'});
@@ -623,11 +612,6 @@ function openServiceDetail(selection,index,origin) {
 document.querySelector('.detail-back').onclick=()=>{
   stage.scrollIntoView({behavior:reduced.matches?'instant':'smooth',block:'start'});
   detailOrigin?.focus({preventScroll:true});
-};
-document.querySelector('.detail-copy').onclick=async()=>{
-  const status=document.querySelector('.detail-copy-status');
-  try {await navigator.clipboard.writeText(contactWechat);status.textContent='微信号已复制，添加时请注明来意。'}
-  catch {status.textContent='微信 '+contactWechat+' · 请选中复制，添加时注明来意。'}
 };
 for(const c of cards) {
   c.button.onclick=()=>activate(c);
